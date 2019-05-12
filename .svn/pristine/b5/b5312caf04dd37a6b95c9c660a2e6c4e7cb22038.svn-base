@@ -1,0 +1,333 @@
+<%@page import="com.seoul.dto.GuideBoardComment"%>
+<%@page import="com.seoul.dto.Guide"%>
+<%@page import="com.seoul.dto.Member"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+ 
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>가이드 신청</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="author">
+  <link rel="shortcut icon" href="http://static02.hongkiat.com/logo/hkdc/favicon.ico">
+  <link rel="icon" href="http://static02.hongkiat.com/logo/hkdc/favicon.ico">
+
+      <link rel="stylesheet" href="/seoul/css/reset.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="/seoul/css/style.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="/seoul/css/grid.css" type="text/css" media="screen">  
+    <link rel="stylesheet" href="/seoul/css/guide2.css" type="text/css" media="screen">  
+    <script src="js/jquery-1.6.2.min.js" type="text/javascript"></script> 
+    <script src="js/jquery.easing.1.3.js" type="text/javascript"></script>
+    <script src="js/jcarousellite_1.0.1.js" type="text/javascript"></script>
+    <script src="js/jquery.galleriffic.js" type="text/javascript"></script>
+    <script src="js/jquery.opacityrollover.js" type="text/javascript"></script> 
+  
+  
+    
+   <style type="text/css">
+   </style>
+   <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+ 		<script type="text/javascript">
+	$(function() {
+		
+		function toggleCommentStatus(guc_CommentNo, edit) {		
+			$('#commentview' + guc_CommentNo).css('display', edit ? 'none' : 'block'); //edit이 true이면 none, false이면 block
+			$('#commentedit' + guc_CommentNo).css('display', edit ? 'block' : 'none'); //하나가 보이면 하나가 안보이는 기능
+		} 
+		
+		
+		$('#writecomment').on('click', function(event) {
+			//댓글 내용이 없을때 경고창 뜨는 브라우저 단계에서의 검사
+			var content = $('textarea#comment_content').val();
+			if (content.length == 0) { //댓글이 없다면 alert창 띄움
+				alert('댓글 내용을 입력하세요.');
+				$('#comment_content').focus();
+			} else { //댓글길이가 0이 아니라면, 즉 댓글 내용이 있다면 submit작업
+				$('#commentform').submit();
+			}
+			event.preventDefault();
+		});
+
+		
+ 		$('a[id=edit]').on('click', function(event) {
+			var guc_CommentNo = $(this).attr('data-commentno'); //data- : 사용자 정의 속성
+			toggleCommentStatus(guc_CommentNo, true); //바로 위쪽의 toggleCommentStatus 함수 호출
+			event.preventDefault();
+		});
+		
+		$('a[id=deletecomment]').on('click', function(event) { //밑에 deletecomment에 있는 세가지 속성을 가져옴
+			var guc_CommentNo = $(this).attr('data-commentno'); //삭제요청이 이뤄지면 delete서블릿이 필요하다
+			var guc_BoardNo = $(this).attr('data-boardno');
+			var pageNo = $(this).attr('data-pageno');
+			var yes = confirm(guc_CommentNo + "번 답글을 삭제할까요?");
+			if (yes) {
+				location.href =
+					'deletecomment.action?guc_commentno=' + guc_CommentNo + 
+							'&guc_boardno=' + guc_BoardNo + '&pageno=' + pageNo;
+			}
+			event.preventDefault();
+		});
+		$('a[id=modify]').on('click', function(event) {
+			var guc_CommentNo = $(this).attr('data-commentno');
+			$('#commenteditform' + guc_CommentNo).submit();
+			event.preventDefault();
+		});
+		
+		$('a[id=cancel]').on('click', function(event) {
+			var guc_CommentNo = $(this).attr('data-commentno');
+			toggleCommentStatus(guc_CommentNo, false);
+			event.preventDefault();
+		});
+	});
+	 
+	</script>
+</head>
+<body id="page30">
+	<jsp:include page="/WEB-INF/views/include/header.jsp" />
+    <jsp:include page="/WEB-INF/views/include/common.jsp" />
+    
+       <section id="content">
+        <div class="bg-top">
+        <div class="bg-top-2">
+        <div class="bg">
+        <div class="bg-top-shadow">
+        <div class="main">
+        <div class="box">
+        <div class="padding">
+        <div class="container_12">
+        <div class="wrapper">
+        <div class="grid_12">
+        
+                                                
+                                                
+	<main id="container" class="qna">
+		<h2 class="hd-element">페이지 별 콘텐츠 내용 시작</h2>
+
+		<header id="pageheader">
+	<div class="holder">
+		<p class="scrum">
+		<h3>가이드 신청 내용</h3>
+		<dl>
+			<dt>공유하기</dt>
+			<!-- 20160801 -->
+			 <dd>
+				</dd>
+			<% Guide guide = (Guide)request.getAttribute("guide"); %> 
+			
+			
+			<dd>
+				<a href="#share_facebook" onclick="f_share_facebook('질문 & 답변')" title="페이스북에 공유하기 새창열림">
+					<span class="ion-social-facebook"></span>
+					<span class="hd-element">페이스북</span>
+				</a>
+			</dd>
+			<dd>
+				<a href="#share_google+" onclick="f_share_google_plus('/qna')" title="구글+에 공유하기 새창열림">
+					<span class="ion-social-googleplus"></span>
+					<span class="hd-element">구글+</span>
+				</a>
+			</dd>
+				<dd>
+					 <a href="#share_naver" onclick='f_share_naver("질문 &amp; 답변");return false;' title="네이버로 공유하기 새창열림">
+						<span class="ion-social-naver"></span>
+						<span class="hd-element">네이버</span>
+					</a>
+				</dd>
+				<dd>
+					 <a href="#share_kakaostory" onclick="f_share_kakao_story();return false;" title="카카오스토리로 공유하기 새창열림">
+						<span class="ion-social-kakaostory"></span>
+						<span class="hd-element">카카오스토리</span>
+					</a>
+				</dd>
+				</dl>
+		</div>
+</header>
+
+
+	<!-- content -->
+	
+		<input type="hidden" name="curPage" value="1"/>
+	<section id="content">
+		<div class="cnt-faqitem view">
+			<div class="header">
+				<p class="date fc-bold fc-grey3"><h2 style="font-weight:bold;">
+					작성일 :&nbsp; <span class="fc-black2"><%= guide.getGub_RegDate() %></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					조회수 :&nbsp; <span class="fc-black2"><%= guide.getGub_ReadCount() %></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					작성자 ID :&nbsp; <span class="fc-black2"><%= guide.getGub_Writer() %></span><br><br>
+					이메일 :&nbsp; <span class="fc-black2"><%= guide.getGub_Email() %></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					연락처 :&nbsp; <span class="fc-black2"><%= guide.getGub_Phone() %></span><br><br>
+					가이드 희망 대상 :&nbsp; <span class="fc-black2"><%= guide.getGub_Target() %></span><br><br>
+					가이드 희망 분야 :&nbsp; <span class="fc-black2"><%= guide.getGub_HopeArea() %></span><br><br>
+					작성자 이름 :&nbsp; <span class="fc-black2"><%= guide.getGub_Name() %></span><br><br><br>
+					-&nbsp; <span class="fc-black2" style="font-size:28px;"><%= guide.getGub_Title() %></span><br><br>
+					</h2>
+				
+				<h4 class="heading2 regular fc-blue" style="font-size:24px;"><%= guide.getGub_Intro() %></h4><br><br>
+			</div>
+			
+			<div class="buttons">
+			<% Member member = (Member)session.getAttribute("loginuser"); %>
+			<% if (member.getMemberId().equals(guide.getGub_Writer())) { %>
+					[&nbsp;<a id="delete" href='#' data-boardno="<%= guide.getGub_BoardNo() %>">삭제</a>&nbsp;]
+		         	[&nbsp;<a href='update.action?gub_boardno=<%= guide.getGub_BoardNo() %>&pageno=<%= request.getAttribute("pageno") %>'>수정</a>&nbsp;]
+		    <% } %> 
+		         	
+		        	[&nbsp;<a href='list.action?pageno=<%= request.getAttribute("pageno") %>'>목록보기</a>&nbsp;] <br>
+			</div>
+			
+
+			
+						<!-- comment 쓰기 영역 -->
+			<!-- detail화면에서 댓글다는 영역을 만드는 코드 -->
+			<!-- hidden방식으로 boardno, pageno넘어가고 content정보가 서블릿으로 넘어간다-->
+		<br /><br />
+				
+		 <% if (session.getAttribute("loginuser") != null) { %> 
+		<form id="commentform" 
+			action="writecomment.action" method="post">
+			<input type="hidden" name="guc_boardno" value="<%= guide.getGub_BoardNo() %>" />
+			<input type="hidden" name="pageno" value='<%= request.getAttribute("pageno") %>' />
+			<input type="hidden" name="guc_writer" value="<%= guide.getGub_Writer() %>" />
+			<table style="width:600px;border:solid 1px;margin:0 auto">
+	            <tr>
+	                <td style="width:550px">	                	
+	                    <textarea name="guc_content" id="comment_content"
+	                    	style="width:550px" rows="3"></textarea>	                    
+	                </td>
+	                <td style="width:50px;vertical-align:middle">
+	                	<a id="writecomment" href="#" style="text-decoration:none">
+	                		등록
+	                	</a>
+	                </td>
+	            </tr>                    
+	        </table>
+        </form>
+         <% } %> 
+        
+        <hr align="center" style="width:600px;" />
+        
+        
+        <!-- ---------------------------------------------------------------------------------- -->
+
+		<!-- comment 표시영역 -->
+
+
+			<% for (GuideBoardComment bcomment : guide.getGub_Comments()) { %> <!-- 데이터가 입력될때마다 tr하나씩-->
+			
+			<div class="cnt-faqitem reply">
+			<div class="header">
+				<p class="label fc-bold">답변</p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= bcomment.getGuc_Content().replace("\r\n", "<br>") %>
+				<p class="date fc-bold fc-grey3">
+					작성일 : <span class="fc-black2">&nbsp;<%= bcomment.getGuc_RegDate() %></span>&nbsp;&nbsp;&nbsp;&nbsp;
+					작성자 : <span class="fc-black2">&nbsp;<%= bcomment.getGuc_Writer() %></span>
+					<div style='display: <%= member.getMemberId().equals(bcomment.getGuc_Writer()) ? "block" : "none" %>'>
+	                    	<a id="edit" data-commentno='<%= bcomment.getGuc_CommentNo() %>' href="#">편집</a>&nbsp;
+	                    	<a id="deletecomment" href="#" data-commentno='<%= bcomment.getGuc_CommentNo() %>'
+													data-boardno='<%= guide.getGub_BoardNo() %>'
+													data-pageno='<%= request.getAttribute("pageno") %>'>삭제</a>
+					</div>
+					
+					
+					
+				</p>
+			</div>
+		</div>
+			
+		
+	                
+	                   <div id='commentedit<%= bcomment.getGuc_CommentNo() %>' style="display: none"> <!-- 삭제를 눌렀을때 -->
+						<%= bcomment.getGuc_Writer() %>&nbsp;&nbsp; 
+						[<%= bcomment.getGuc_RegDate() %>] 
+						<br /><br />
+						<form id="commenteditform<%= bcomment.getGuc_CommentNo() %>" action="updatecomment.action" method="post">
+						<input type="hidden" name="guc_boardno" value="<%= guide.getGub_BoardNo() %>" />
+						<input type="hidden" name="pageno" value='<%= request.getAttribute("pageno") %>' />
+						<input type="hidden" name="guc_commentno" value="<%= bcomment.getGuc_CommentNo() %>" />
+						<textarea name="guc_content" style="width: 600px" rows="3" maxlength="200"><%= bcomment.getGuc_Content() %></textarea>
+						</form>
+						<div>
+							<!-- bcomment.getCommentNo 를 이용해서 커맨트 넘버를 같이 저장하면서 돌수있게 만듬 -->
+							<a id="modify" data-commentno='<%= bcomment.getGuc_CommentNo() %>' href="#">수정</a> 
+							&nbsp; 
+							<a id="cancel" data-commentno='<%= bcomment.getGuc_CommentNo() %>' href="#">취소</a>
+						</div>
+					</div> 
+		<% } %>	
+		
+<br><br><br></table>
+</div>
+</section>
+
+			
+			
+			
+                    
+                                                <section id="content">                         
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
+        <div class="bg-bot">
+        	<div class="main">
+            	<div class="container_12">
+                	<div class="wrapper">
+                    	<article class="grid_4">
+                        	<h3 class="p2">New Furniture</h3>
+                            <div class="wrapper">
+                            	<figure class="img-indent frame2"><img src="images/page4-img7.jpg" alt="" /></figure>
+                                <p class="prev-indent-bot color-4">At vero eos eaccusa mus etusto odio.</p>
+                                <p class="prev-indent-bot">Tium voluptatum del eniti atque corrupti quos dolores.</p>
+                                <a class="button" href="#">View More</a>
+                            </div>
+                        </article>
+                        <article class="grid_8">
+                        	<h3 class="prev-indent-bot2">Our Pricing</h3>
+                            <div class="wrapper">
+                            	<div class="grid_4 alpha">
+                                	<div class="indent-right2">
+                                        <ul class="price-list">
+                                            <li><span>$6700.00</span><a href="#">Totam rem aperiam eaque</a><strong>&nbsp;</strong></li>
+                                            <li><span>$4370.00</span><a href="#">Inventore veritatis quasi</a><strong>&nbsp;</strong></li>
+                                            <li><span>$5780.00</span><a href="#">Nemo enim ipsam voluptatem</a><strong>&nbsp;</strong></li>
+                                            <li><span>$2300.00</span><a href="#">Voluptas sit aspernatur aut</a><strong>&nbsp;</strong></li>
+                                            <li><span>$3650.00</span><a href="#">Sed quia consequuntur magni</a><strong>&nbsp;</strong></li>
+                                            <li class="last"><span>$7900.00</span><a href="#">Ratione voluptatem sequi</a><strong>&nbsp;</strong></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="grid_4 omega">
+                                	<div class="indent-right2">
+                                        <ul class="price-list">
+                                            <li><span>$6700.00</span><a href="#">Totam rem aperiam eaque</a><strong>&nbsp;</strong></li>
+                                            <li><span>$4370.00</span><a href="#">Inventore veritatis quasi</a><strong>&nbsp;</strong></li>
+                                            <li><span>$5780.00</span><a href="#">Nemo enim ipsam voluptatem</a><strong>&nbsp;</strong></li>
+                                            <li><span>$2300.00</span><a href="#">Voluptas sit aspernatur aut</a><strong>&nbsp;</strong></li>
+                                            <li><span>$3650.00</span><a href="#">Sed quia consequuntur magni</a><strong>&nbsp;</strong></li>
+                                            <li class="last"><span>$7900.00</span><a href="#">Ratione voluptatem sequi</a><strong>&nbsp;</strong></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </section>
+    
+    		 <jsp:include page="/WEB-INF/views/include/footer.jsp" />
+    
+    
+</body>
+</html>

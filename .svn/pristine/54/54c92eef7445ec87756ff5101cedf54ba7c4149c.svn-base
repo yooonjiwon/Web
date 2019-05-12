@@ -1,0 +1,59 @@
+package com.seoul.memberservlet;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.seoul.dto.Member;
+import com.seoul.service.MemberService;
+
+@WebServlet(value = "/mypage.action")
+public class MyPageServlet extends HttpServlet{
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/mypage.jsp");
+		dispatcher.forward(req, resp);	
+		
+		}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");	
+
+			//브라우저에서 전송된 데이터 읽기
+			String m_memberid = req.getParameter("memberid");
+			String m_name = req.getParameter("name");
+			String m_email = req.getParameter("email");
+			String m_birthday = req.getParameter("birthday");
+			String m_country_code = req.getParameter("country_code");
+			String m_phone = req.getParameter("phone");
+			String m_gender = req.getParameter("gender");
+			String m_nation = req.getParameter("nation");
+			String m_interest = req.getParameter("interest");			
+			
+			//사용자의 요청 데이터를 Board 객체에 저장
+			Member member = new Member();	
+			member.setName(m_memberid);
+			member.setName(m_name);
+			member.setEmail(m_email);
+			member.setBirthday(m_birthday);
+			member.setCountry_code(m_country_code);
+			member.setPhone(m_phone);
+			member.setGender(m_gender);
+			member.setNation(m_nation);
+			member.setInterest(m_interest);
+
+			//사용자 등록 처리
+			MemberService boardService = new MemberService();
+			boardService.writeBoard(member);
+			resp.sendRedirect("/seoul/index.action");
+		}
+		
+		
+}
+

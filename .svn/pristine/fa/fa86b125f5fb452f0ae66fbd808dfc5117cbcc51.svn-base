@@ -1,0 +1,16 @@
+package com.seoul.service;
+
+import com.seoul.dao.GuideBoardDao;
+import com.seoul.dao.GuideBoardDao;
+import com.seoul.dto.Guide;
+
+public class GuideBoardService {
+
+	public void writeBoard(Guide guide) {
+		GuideBoardDao dao = new GuideBoardDao();
+		dao.insertBoard(guide);
+	}
+
+	
+
+}

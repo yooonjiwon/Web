@@ -1,0 +1,70 @@
+package com.seoul.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.seoul.dto.Member;
+
+public class MemberDao {
+
+	public void insertMember(Member member) {
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		
+		try {
+		conn = ConnectionHelper.getConnection("oracle");
+		String sql="INSERT INTO MEMBER(memberid, name, passwd, email, birthday, nickname, country_code, phone, gender, nation, interest) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1,  member.getMemberId());
+			pstmt.setString(2, member.getName());
+			pstmt.setString(3, member.getPasswd());
+			pstmt.setString(4, member.getEmail());
+			pstmt.setString(5, member.getBirthday());
+			pstmt.setString(6, member.getNickname());
+			pstmt.setString(7, member.getCountry_code());
+			pstmt.setString(8, member.getPhone());
+			pstmt.setString(9, member.getGender());
+			pstmt.setString(10, member.getNation());
+			pstmt.setString(11, member.getInterest());
+			pstmt.executeUpdate();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try{pstmt.close();} catch(Exception ex) {}
+			try{pstmt.close();} catch(Exception ex) {}
+		}
+		
+	}
+	
+	public Member selectMemberByIdAndPasswd(String memberId, String passwd){
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		Member member = null;
+		try {
+		conn = ConnectionHelper.getConnection("oracle");
+		String sql = "SELECT memberid, email, usertype FROM member WHERE memberid=? AND passwd=?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, memberId);
+		pstmt.setString(2, passwd);
+		rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			member=new Member();
+			member.setMemberId(rs.getString(1));
+			member.setEmail(rs.getString(2));
+			member.setUserType(rs.getString(3));
+		}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try{rs.close();} catch (Exception ex) {}
+			try{pstmt.close();} catch (Exception ex) {}
+			try{rs.close();} catch (Exception ex) {}
+		}
+		
+		return member;
+	}
+}

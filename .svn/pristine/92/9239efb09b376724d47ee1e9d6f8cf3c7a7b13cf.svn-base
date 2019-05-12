@@ -1,0 +1,52 @@
+package com.seoul.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import com.seoul.dto.Guide;
+
+public class GuideBoardDao {
+
+	public void insertBoard(Guide guide) {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null; //for insert
+		
+		//데이터베이스 연동 코드를 입력하는곳(JDBC코드 입력)
+		try {
+			//1. 드라이버 등록
+			Class.forName("oracle.jdbc.OracleDriver");
+			//2. 연결 만들기
+			conn = DriverManager.getConnection(
+					"jdbc:oracle:thin:@210.16.214.202:1521:xe", //연결대상 
+					"seoul", "789123"); //계정정보
+			//3. SQL작성 및 명령 만들기
+			String sql = "INSERT INTO j_guideboard (gub_boardno, gub_title, gub_writer, gub_intro) " //***groupno중요****/
+						+ "VALUES (?,?,?,?)";
+			pstmt = conn.prepareStatement(sql);
+			//VALUES 의 ? ? ? 에 들어갈 내용
+			pstmt.setInt(1,guide.getGub_BoardNo());
+			pstmt.setString(2,guide.getGub_Title());
+			pstmt.setString(3,guide.getGub_Writer());
+			pstmt.setString(4,guide.getGub_Intro());
+			//4. 명령 실행
+			pstmt.executeUpdate(); //insert, update, delete 구문 실행 메서드
+			
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			//5. 연결 종료
+			try { pstmt.close(); } catch (Exception ex) {}
+			try { conn.close(); } catch (Exception ex) {}
+			
+		}
+		
+		
+	}
+	}
+
+
+

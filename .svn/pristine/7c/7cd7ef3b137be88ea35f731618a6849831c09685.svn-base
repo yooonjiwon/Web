@@ -1,0 +1,614 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+ 
+<!DOCTYPE html>
+
+<html>
+<head>
+     <title></title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/reset.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="css/grid.css" type="text/css" media="screen">  
+    <link rel="stylesheet" href="css/guide2.css" type="text/css" media="screen">  
+    <script src="js/jquery-1.6.2.min.js" type="text/javascript"></script> 
+    <script src="js/jquery.easing.1.3.js" type="text/javascript"></script>
+    <script src="js/jcarousellite_1.0.1.js" type="text/javascript"></script>
+    <script src="js/jquery.galleriffic.js" type="text/javascript"></script>
+    <script src="js/jquery.opacityrollover.js" type="text/javascript"></script> 
+    	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+		$(function() {
+		$('#write').on('click', function(event) {
+			location.href = 'write.action';
+		});
+		});
+	
+		$(document).ready(function() { 
+			$(".jCarouselLite").jCarouselLite({
+				  btnNext: ".next",
+				  btnPrev: ".prev",		  
+				  speed: 400,		  
+				  vertical: false,
+				  circular: true,
+				  easing:'easeOutQuart',
+				  visible: 4,
+				  start: 0,
+				  scroll: 1
+			 });
+		});
+	</script>    
+
+</head>
+<body id="page3">
+
+		<jsp:include page="/WEB-INF/views/include/header.jsp" />
+    
+    <div class="ic">More Website Templates  @ TemplateMonster.com - August22nd 2011!</div>
+       <section id="content">
+        <div class="bg-top">
+        	<div class="bg-top-2">
+                <div class="bg">
+                    <div class="bg-top-shadow">
+                        <div class="main">
+                            <div class="box">
+                                <div class="padding">
+                                    <div class="container_12">
+                                        <div class="wrapper">
+                                            <div class="grid_12">
+                                            	<div class="indent-left p2">
+                                                	<h3 class="p0">서울 관광 가이드북 ＆ 관광 지도 신청</h3><br>
+                                                	
+                                                	
+                           
+   
+   
+   
+   
+   
+   
+   
+   
+	<!-- start:content -->
+	<!-- content -->
+	
+
+			<script type="text/javascript">
+function f_call_adres () {
+	var args = {
+		  zoneTagtId : "zip|adres1"
+		//, postTagtId : "zip|adres1"
+	 	, positionId : ""
+	 	, languageId : "ko"
+	};
+	f_find_adres(args);
+}
+
+function fn_save(){
+	$.ajax({
+		type : "post",
+		url: '/fnc/guidebook/action.json',
+		data : $("#frmGuidBook").serialize(),
+		dataType: 'json',
+		success: function(data) {
+			if(data && data.result == "SUCC"){
+				$('.deemed-white').fadeIn(200);
+			}else{
+				alert(data.resultMsg);
+			}
+		},
+		error: function(data, status, err) {
+		}
+	});
+}
+
+$(document).ready(function(){
+	$.validator.addMethod("tyCheck", function(v, e) {
+
+		if($("#guidebook_type1").val() !="" || $("#guidebook_type2").val() !=""){
+			return true;
+		}
+		return false;
+	});
+
+	$.validator.addMethod("telCheck", function(v, e) {
+		return this.optional(e) || /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/g.test(v);
+	});
+
+	$("#frmGuidBook").validate({
+		ignore: "input[type='text']:hidden",
+		rules : {
+			tyArr : { tyCheck : true },
+			name : { required : true },
+			email : { required : true, email : true },
+			telno : { required : true, telCheck : true },
+			zip : { required : true },
+			adres1 : { required : true },
+			adres2 : { required : true },
+			guidebook_agree : { required : true }
+		},
+		messages : {
+			tyArr : { tyCheck : "가이드북 또는 지도중 1권 이상 선택해주세요" },
+			telno : { telCheck : "유효하지 않은 전화번호입니다."},
+		},
+		errorElement: 'div',
+		errorClass: 'ess_message',
+		errorPlacement: function(error, element) {
+
+			if(element.context.type == "checkbox"){
+				error.insertAfter(element.parent().parent().find(':last'));
+			}else if(element.context.type == "select-one"){
+				//error.insertAfter(element.parent().parent().find(':last'));
+			}else{
+				error.insertAfter(element.parent());
+			}
+		},
+		highlight:function(element, errorClass, validClass) {
+			$(element).parent().parent().addClass("ess_message");
+			$(element).addClass('ess_message');
+		},
+		unhighlight: function(element, errorClass, validClass) {
+			$(element).parent().parent().removeClass("ess_message");
+			$(element).removeClass('ess_message');
+		},
+		submitHandler: function (frm) {
+			if(confirm("저장 하시겠습니까?")){
+				fn_save();
+				return false;
+			}else{
+				return false;
+			}
+		}
+	});
+
+	$("#btnCancel").click(function(){
+		window.history.back();
+	});
+
+});
+</script>
+			<!-- content -->
+			<section id="content">
+						<div class="guidebook_app" >
+						<form id="frmGuidBook" name="frmGuidBook" action="/map-guide-book/action" method="post"><fieldset>
+								<legend>가이드북 신청</legend>
+								<p class="info-box">
+									<b>1인당 가이드북3권, 지도3권(총6부)까지 무료신청 가능, 배송은 평일 기준 약 5일 소요<br>
+									(일반우편 배송이므로 우체국 사정에 따라 달라질 수 있음)</b><br><br>
+									- 6부 이하 홍보물을 직접 방문하여 수령하길 원하는 경우, 해당 관광안내소로 방문하시기 바랍니다. <br>
+									<button type="button" class="button mt5 mb5 blue" onclick="window.open('http://korean.visitseoul.net/essential-Info-article/서울-관광안내소_/395')" target="_blank">서울 관광안내소 찾기</button><br>
+									- 외국어판 홍보물 신청 및 7부 이상 홍보물 신청을 원하시는 경우, 홈페이지 하단에 &lt;홍보물 대량신청 및 기타언어권 소량신청 방법&gt;에 따라 신청하시기 바랍니다.<br>
+
+								</p>
+								<ul class="table">
+									<li>
+										<div class="guidebook_img" style="background-image:url(./images/book01.jpg); background-size:cover; background-position:center center;"></div>
+										<div>
+											<label for="guidebook_type1"><span class="hd-element">서울 관광 가이드북을 신청하세요.</span></label>
+											<select name="tyArr" id="guidebook_type1">
+												<option value="">신청</option>
+												<option value="GUI1">1권</option>
+												<option value="GUI2">2권</option>
+												<option value="GUI3">3권</option>
+											</select>
+											<span class="heading4">서울 관광 가이드북</span>
+											</div>
+									</li>
+									<li>
+										<div class="guidebook_img" style="background-image:url(./images/book02.jpg); background-size:cover; background-position:center center;"></div>
+										<div>
+											<label for="guidebook_type2"><span class="hd-element">서울 관광 지도를 신청하세요.</span></label>
+											<select name="tyArr" id="guidebook_type2">
+												<option value="">신청</option>
+												<option value="MAP1">1권</option>
+												<option value="MAP2">2권</option>
+												<option value="MAP3">3권</option>
+											</select>
+											<span class="heading4">서울 관광 지도</span>
+											</div>
+									</li>
+								</ul>
+								<dl class="table">
+									<dt><label for="name" class="mt40 heading4">성명<span class="fc-red">*</span></label></dt>
+									<dd><div class="inbox" style="width:95%; max-width:100px;"><input id="name" name="name" type="text" value="" maxlength="200"/></div>
+									</dd>
+								</dl>
+								<dl class="table">
+									<dt><label for="email" class="mt40 heading4">e-mail<span class="fc-red">*</span></label></dt>
+									<dd><div class="inbox" style="width:95%; max-width:200px;"><input id="email" name="email" type="text" value="" size="40" maxlength="200"/></div></dd>
+								</dl>
+								<dl class="table">
+									<dt><label for="telno" class="mt40 heading4">전화번호<span class="fc-red">*</span></label></dt>
+									<dd><div class="inbox" style="width:95%; max-width:200px;"><input id="telno" name="telno" type="text" value="" size="40" maxlength="200"/></div></dd>
+								</dl>
+								<dl class="table">
+									<dt><label for="adres1" class="mt40 heading4">기본주소<span class="fc-red">*</span></label></dt>
+									<dd><div class="inbox" style="width:95%;"><input id="adres1" name="adres1" type="text" value="" maxlength="200"/></div></dd>
+								</dl>
+								<dl class="table">
+									<dt><label for="adres2" class="mt40 heading4">상세주소<span class="fc-red">*</span></label></dt>
+									<dd><div class="inbox" style="width:95%;"><input id="adres2" name="adres2" type="text" value="" maxlength="200"/></div></dd>
+								</dl>
+								<dl class="table">
+									<dt><label for="adres2" class="mt40 heading4">신청이유<span class="fc-red">*</span></label></dt>
+									<dd><div class="inbox" style="width:95%;"><input id="adres2" name="adres2" type="text" value="" maxlength="200"/></div></dd>
+								</dl>
+								<dl class="table">
+									<dt></dt>
+									<dd>
+										<div class="heading4"><input type="checkbox" id="guidebook_agree" name="guidebook_agree"/> <label for="guidebook_agree">가이드북 수신을 위한 개인정보 수집에 동의합니다.</label></div>
+										<a href="http://www.seoul.go.kr/v2007/help/privacy.html" target="_blank" class="fc-blue small pl-20 ul">[개인정보 처리방침]</a>
+									</dd>
+								</dl>
+								<!-- button -->
+								<div class="mt40 textcenter">
+									<button type="submit" class="button fontsize1 bold blue pl-20 pr-20">신청하기</button>
+									&nbsp;&nbsp;
+									<button type="button" class="button fontsize1 bold grey pl-20 pr-20" id="btnCancel" />취소</button>
+								</div>
+								<!-- //button -->
+							</fieldset>
+							</form><div class="info-box-gray mt40">
+								<h5>홍보물 대량신청 및 기타 언어권 소량신청 방법</h5>
+								<p class="fc-blue mt20">홍보물 7부 이상 대량신청 및 국문 외 기타 언어권 소량신청은 다음 신청서를 작성해주시기 바랍니다.</p>
+								<ol class="mt20">
+									<li>홍보물신청서 다운받기 (
+										<a href="/comm/getFile?srvcId=BBSTY1&parentSn=1832&fileTy=ATTACH&fileNo=1" onclick="dcsMultiTrack('DCS.dcssip','korean.visitseoul.net','DCS.dcsuri','/comm/getFile?srvcId=BBSTY1&parentSn=1832&fileTy=ATTACH&fileNo=1','WT.down','대량신청서');">PDF</a>
+										, <a href="/comm/getFile?srvcId=BBSTY1&parentSn=1832&fileTy=ATTACH&fileNo=2" onclick="dcsMultiTrack('DCS.dcssip','korean.visitseoul.net','DCS.dcsuri','/comm/getFile?srvcId=BBSTY1&parentSn=1832&fileTy=ATTACH&fileNo=2','WT.down','대량신청서');">MS워드파일(DOC)</a>
+										)
+									</li>
+									<li>신청서 작성 및 신청자 성명란에 직접 날인하기</li>
+									<li>날인된 신청서를 메일 또는 팩스로 회신하기<br>E-mail : <a href="mailto:mapnguide@seoulwelcome.com">mapnguide@seoulwelcome.com</a> / 팩스: 02-3788-0899(팩스로 회신 시, 확인 전화 필수)</li>
+								</ol>
+								<p class="fc-blue mt20">※ 배송안내
+								<ol class="mt20">
+									<li style="list-style-type: disc;">대량신청 배송은 주 1회 수요일 오후5시까지 취합하여 목요일 오전에 발송됩니다.</li>
+									<li style="list-style-type: disc;">보통은 발송 다음날인 금요일, 내주 초 쯤에 받아볼 수 있으며, 택배이동이 많은 기간에는 배송이 지연됩니다.</li>
+									<li style="list-style-type: disc;">배송비용: 6부 이하 외국어버전 홍보물 소량신청인 경우, 무료배송</li>
+									<li style="list-style-type: disc;">7부 이상 신청할 경우, 홍보물 1box(200부) 기준 평균 5,000원 착불이며 카드결제 가능</li>
+									<li style="list-style-type: disc;">기타 세부사항은 신청서 유의사항 참조</li>
+									<li style="list-style-type: none;"><span class="fc-blue">문의전화: 02-3788-0845</span></li>
+								</ol>
+							</div>
+
+
+							<div class="deemed-white" style="display:none;">
+								<div class="app_progess_box">
+									<div class="title"><a href="#" onclick="window.history.back();return false;" title="신청완료" >신청완료</a></div>
+									<p class="mt20">신청이 완료되었습니다. <br>감사합니다.</p>
+								</div>
+							</div>
+
+						</div>
+			</section>
+			<!-- //content --><script type="text/javascript">
+		var WindowH,BodyH,AsideW,AsideH,ScrTop,ScrBottom,StartScroll,fixBottom;
+		$(window).bind('resize load',function(){
+			WindowH = $(window).height();
+			BodyH = $('body').height();
+			AsideW = $('aside').width();
+			AsideH = $('.aside').height();
+			StartScrTop = $('#header').height() + $('#pageheader').height() + 60;
+			if (AsideH < WindowH){
+				isScroll = false;
+			} else {
+				isScroll = true;
+			}
+			if ($(window).width() < 800){
+				$('.aside').css({'position':'','width':'auto','height':'auto','bottom':'auto','top':'auto'});
+			}
+		})
+		$(window).scroll(function(){
+			try{
+				$('#container > div.holder').css('position','relative');
+				ScrTop = $(window).scrollTop();
+				ScrBottom = BodyH - ScrTop - WindowH;
+				StartScroll = (AsideH + StartScrTop) - (ScrTop + WindowH);
+				if (WindowH < AsideH) {
+					fixBottom = ($('#container > div.holder').height() +StartScrTop) - ((ScrTop + AsideH) - (AsideH - WindowH)) - 50
+				} else {
+					fixBottom = ($('#container > div.holder').height() +StartScrTop) - (ScrTop + AsideH) - 50
+				}
+
+				if ($(window).width() > 800){
+					//$('body').append($('#content').height()+'_'+$('.aside').height())
+					if ($('#content').height() > $('.aside').height()){
+						if (isScroll == true){
+							if (StartScroll < 0){
+								$('.aside').css({'position':'fixed','width':AsideW,'bottom':0});
+								fixB();
+							}else	{
+								$('.aside').css({'position':'','width':'auto','bottom':'auto','top':'auto'});
+								fixB();
+							}
+						}else	{
+							if (ScrTop > StartScrTop){
+								$('.aside').css({'position':'fixed','width':AsideW,'top':0});
+								fixB();
+							}else	{
+								$('.aside').css({'position':'','width':'auto','top':'auto'});
+								fixB();
+							}
+						}
+					}
+				}
+			}catch(e){}
+		});
+
+	function fixB(){
+		if (fixBottom < 0) {
+			$('.aside').css({'position':'absolute','width':AsideW,'height':AsideH,'bottom':50,'top':'auto'});
+		}
+	}
+</script>
+
+<!--
+
+-->
+
+</div>
+	</main>
+	<!-- end:content -->
+
+	<!-- start:footer -->
+	<footer id="footer" >
+	<div class="top">
+		<div class="holder">
+			<div class="address">
+				<strong>제공</strong>
+				<p><a href="http://www.seoul.go.kr/" target="_blank" title="서울특별시 페이지로 새창열림"><img src="/humanframe/theme/visitseoul/assets/images/img/img-footer-info-logo-seoul-ko.png" alt="서울특별시" /></a></p>
+				<p>04524 서울특별시 중구 세종대로 110</p>
+			</div>
+			<div class="contact">
+				<strong>운영</strong>
+				<p><a href="http://www.seoulwelcome.com/" target="_blank" title="서울관광마케팅 페이지로 새창열림"><img src="/humanframe/theme/visitseoul/assets/images/img/img-footer-info-logo-tour-ko.png" alt="서울관광마케팅" /></a></p>
+				<p>운영시간 : 월~금, 오전 9시~오후 6시<br />이메일 : staff@seoulwelcome.com<br />전화 : 02-3788-0830<br />서울도보관광 : 02-6925-0777</p>
+			</div>
+			<div class="tourism">
+				<strong>일반 관광 문의</strong>
+				<p><a href="http://kto.visitkorea.or.kr/kor/customer/call/1330.kto" target="_blank" title="관광통역안내전화 1330 페이지로 새창열림"><img src="/humanframe/theme/visitseoul/assets/images/img/img-footer-info-logo-1330-ko.png" alt="관광통역안내전화 1330" /></a></p>
+				<br />
+				<strong><a href="http://korean.visitseoul.net/essential-Info-article/%EA%B4%80%EA%B4%91%EB%B6%88%ED%8E%B8%EC%B2%98%EB%A6%AC%EC%84%BC%ED%84%B0_/18940" target="_blank" title="관광불편처리센터 페이지로 새창열림" style="color:#000000;">관광불편처리센터</a></strong>
+			</div>
+		</div>
+	</div>
+	<div class="bottom">
+		<div class="holder">
+			<h2>
+				  <img src="/humanframe/theme/visitseoul/assets/images/img/img-footer-logo.png" alt="VISIT SEOUL .NET" />
+				  <span style="padding-top:2px; font-size:12px;display:block;">서울시 공식 관광정보 웹사이트</span>
+			   </h2>
+			   <div class="fselect_area">
+				<div class="newsletter">
+					<strong>VisitSeoul 뉴스레터</strong><p>
+						<a href="/subscribe-newsletter">
+							신청하기<span class="ion-chevron-right"></span>
+						</a>
+					</p>
+				</div>
+				<div class="review">
+					<strong>서울여행리뷰</strong>
+					<p>
+						<a href="https://www.tripadvisor.co.kr/Tourism-g294197-Seoul-Vacations.html" target="_blank">
+							TripAdvisor<span class="ion-chevron-right"></span>
+						</a>
+					</p>
+				</div>
+			</div>
+			<div class="fmenu_area">
+				<dl>
+					<dt class="hd-element">siteinfo</dt>
+					<dd><a href="http://www.seoul.go.kr/v2007/help/privacy3.html" target="_blank">회원약관</a></dd>
+					<dd><a href="http://www.seoul.go.kr/v2007/help/privacy.html" target="_blank">개인정보처리방침</a></dd>
+				</dl>
+				<a href="http://www.webwatch.or.kr/Situation/WA_Situation.html?MenuCD=110" class="accessibility" target="_blank" ><img src="/humanframe/theme/visitseoul/assets/images/img/img-web-accessibility.png" alt="미래창조과학부 WEB ACCESSIBILITY 마크(웹 접근성 품질인증 마크)" title="국가 공인 인증기관 : 웹와치 새창열림" /></a>
+				</div>
+		</div>
+		<p class="copyright">© 2006–2016 Seoul Metropolitan Government. All rights reserved</p>
+	</div>
+</footer><!-- end:footer -->
+
+	<!-- Google Analytics -->
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-16476520-26', 'auto');
+	  ga('send', 'pageview');
+	</script>
+	<script type="text/javascript">
+	</script>
+	<script type="text/javascript" src="//weblog.eseoul.go.kr/wlo/js/install.js"></script>
+   
+   
+   
+   
+   
+   
+   
+                                                	
+                                                	
+                                                </div>
+                                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>	
+                                                
+      
+        <div class="bg-bot">
+        	<div class="main">
+            	<div class="container_12">
+                	<div class="wrapper">
+                    	<article class="grid_4">
+                        	<h3 class="p2">New Furniture</h3>
+                            <div class="wrapper">
+                            	<figure class="img-indent frame2"><img src="images/page4-img7.jpg" alt="" /></figure>
+                                <p class="prev-indent-bot color-4">At vero eos eaccusa mus etusto odio.</p>
+                                <p class="prev-indent-bot">Tium voluptatum del eniti atque corrupti quos dolores.</p>
+                                <a class="button" href="#">View More</a>
+                            </div>
+                        </article>
+                        <article class="grid_8">
+                        	<h3 class="prev-indent-bot2">Our Pricing</h3>
+                            <div class="wrapper">
+                            	<div class="grid_4 alpha">
+                                	<div class="indent-right2">
+                                        <ul class="price-list">
+                                            <li><span>$6700.00</span><a href="#">Totam rem aperiam eaque</a><strong>&nbsp;</strong></li>
+                                            <li><span>$4370.00</span><a href="#">Inventore veritatis quasi</a><strong>&nbsp;</strong></li>
+                                            <li><span>$5780.00</span><a href="#">Nemo enim ipsam voluptatem</a><strong>&nbsp;</strong></li>
+                                            <li><span>$2300.00</span><a href="#">Voluptas sit aspernatur aut</a><strong>&nbsp;</strong></li>
+                                            <li><span>$3650.00</span><a href="#">Sed quia consequuntur magni</a><strong>&nbsp;</strong></li>
+                                            <li class="last"><span>$7900.00</span><a href="#">Ratione voluptatem sequi</a><strong>&nbsp;</strong></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="grid_4 omega">
+                                	<div class="indent-right2">
+                                        <ul class="price-list">
+                                            <li><span>$6700.00</span><a href="#">Totam rem aperiam eaque</a><strong>&nbsp;</strong></li>
+                                            <li><span>$4370.00</span><a href="#">Inventore veritatis quasi</a><strong>&nbsp;</strong></li>
+                                            <li><span>$5780.00</span><a href="#">Nemo enim ipsam voluptatem</a><strong>&nbsp;</strong></li>
+                                            <li><span>$2300.00</span><a href="#">Voluptas sit aspernatur aut</a><strong>&nbsp;</strong></li>
+                                            <li><span>$3650.00</span><a href="#">Sed quia consequuntur magni</a><strong>&nbsp;</strong></li>
+                                            <li class="last"><span>$7900.00</span><a href="#">Ratione voluptatem sequi</a><strong>&nbsp;</strong></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    		 <jsp:include page="/WEB-INF/views/include/footer.jsp" />
+    	 
+    <script type="text/javascript">
+			$(window).load(function() {
+			// We only want these styles applied when javascript is enabled
+			$('div.navigation').css({'width' : '320px', 'float' : 'right'});
+			$('div.content').css('display', 'block');
+	
+			// Initially set opacity on thumbs and add
+			// additional styling for hover effect on thumbs
+			var onMouseOutOpacity = 0.5;
+			$('#thumbs ul.thumbs li span').opacityrollover({
+				mouseOutOpacity:   onMouseOutOpacity,
+				mouseOverOpacity:  0.0,
+				fadeSpeed:         'fast',
+				exemptionSelector: '.selected'
+			});
+			
+			// Initialize Advanced Galleriffic Gallery
+			var gallery = $('#thumbs').galleriffic({
+				delay:                     7000,
+				numThumbs:                 12,
+				preloadAhead:              6,
+				enableTopPager:            false,
+				enableBottomPager:         false,
+				imageContainerSel:         '#slideshow',
+				controlsContainerSel:      '',
+				captionContainerSel:       '',
+				loadingContainerSel:       '',
+				renderSSControls:          true,
+				renderNavControls:         true,
+				playLinkText:              'Play Slideshow',
+				pauseLinkText:             'Pause Slideshow',
+				prevLinkText:              'Prev',
+				nextLinkText:              'Next',
+				nextPageLinkText:          'Next',
+				prevPageLinkText:          'Prev',
+				enableHistory:             true,
+				autoStart:                 7000,
+				syncTransitions:           true,
+				defaultTransitionDuration: 900,
+				onSlideChange:             function(prevIndex, nextIndex) {
+					// 'this' refers to the gallery, which is an extension of $('#thumbs')
+					this.find('ul.thumbs li span')
+						.css({opacity:0.5})
+				},
+				onPageTransitionOut:       function(callback) {
+					this.find('ul.thumbs li span').css({display:'block'});
+				},
+				onPageTransitionIn:        function() {
+					this.find('ul.thumbs li span').css({display:'none'});
+				}
+			});
+		});
+	</script>		 
+    		                                           
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+
+   <div id="pageContainer">
+   
+      
+      <div style="padding-top:25px;text-align:center">
+      <div id="inputcontent">
+          <div id="inputmain">
+              <div class="inputsubtitle">게시판 글 쓰기</div>
+              <form id="writeform" action="write.action" method="post">
+              <table>
+                  <tr>
+                      <th>글번호</th>
+                      <td>
+                          <input type="text" name="gub_boardno" style="width:280px" />
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>제목</th>
+                      <td>
+                          <input type="text" name="gub_title" style="width:280px" />
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>작성자</th>
+                      <td>
+                         
+                         <!-- hidden : 서버로 전송하지만 브라우저에 표시되지 않는 요소 -->
+                         <input type="text" name="gub_writer">
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>소개</th>
+                      <td>                          
+                          <textarea name="gub_intro" cols="76" rows="15"></textarea>
+                      </td>
+                  </tr>
+              </table>
+              <div class="buttons">
+                 <!-- <form>의 submit수행 -->              
+                 <a id="write" href="#">글쓰기</a>
+                 &nbsp;&nbsp;
+                 <a href="/seoul/seoulmate.jsp">목록보기</a>
+              </div>
+              </form>
+          </div>
+      </div>      
+   
+   </div>
+   </div>
+</body>
+</html>

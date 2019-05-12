@@ -1,0 +1,93 @@
+package com.seoul.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.seoul.dao.InformationBoardDao;
+import com.seoul.dto.Information;
+
+public class InformationBoardService {
+
+	//void=리턴값X
+	public void writeBoard(Information information) {
+		InformationBoardDao dao = new InformationBoardDao();
+		dao.insertBoard(information);
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////
+	
+	public List<Information> findBoardList() {
+		InformationBoardDao boardDao = new InformationBoardDao();
+		List<Information> boards = boardDao.selectBoard();
+		return boards;
+	}
+
+	public List<Information> findBoardList2() {
+		InformationBoardDao boardDao2 = new InformationBoardDao();
+		List<Information> boards2 = boardDao2.selectBoard2();
+		return boards2;
+	}
+
+/*	public List<Information> findBoardList3() {
+		InformationBoardDao boardDao3 = new InformationBoardDao();
+		List<Information> boards3 = boardDao3.selectBoard3();
+		return boards3;
+	}
+	
+	public List<Information> findBoardList4() {
+		InformationBoardDao boardDao4 = new InformationBoardDao();
+		List<Information> boards4 = boardDao4.selectBoard4();
+		return boards4;
+	}
+	
+	public List<Information> findBoardList5() {
+		InformationBoardDao boardDao5 = new InformationBoardDao();
+		List<Information> boards5 = boardDao5.selectBoard5();
+		return boards5;
+	}*/
+	
+/*	public List<Information> findBoardList6() {
+		InformationBoardDao boardDao6 = new InformationBoardDao();
+		List<Information> boards6 = boardDao6.selectBoard6();
+		return boards6;
+	}
+	
+	public List<Information> findBoardList7() {
+		InformationBoardDao boardDao7 = new InformationBoardDao();
+		List<Information> boards7 = boardDao7.selectBoard7();
+		return boards7;
+	}
+	
+	public List<Information> findBoardList8() {
+		InformationBoardDao boardDao8 = new InformationBoardDao();
+		List<Information> boards8 = boardDao8.selectBoard8();
+		return boards8;
+	}*/
+	
+	//////////////////////////////////////////////////////////////////////////////////
+
+	public int getBoardCount() {
+		InformationBoardDao dao = new InformationBoardDao();
+		int count = dao.getBoardCount();
+		return count;
+	}
+
+	public void increaseReadCount(int boardNo) {
+		InformationBoardDao boardDao = new InformationBoardDao();
+		boardDao.updateReadCount(boardNo);		
+	}
+
+	public Information findBoardByBoardNo(int boardNo) {
+		InformationBoardDao boardDao = new InformationBoardDao();
+		Information board = boardDao.selectBoardByBoardNo(boardNo);
+		/*ArrayList<BoardAttach> attachments = boardDao.selectBoardAttachByBoardNo(boardNo);
+		board.setAttachments(attachments);
+		ArrayList<BoardComment> comments =
+				boardDao.selectCommentByBoardNo(boardNo);
+		board.setComments(comments);*/
+		return board;
+	}
+
+	
+
+}

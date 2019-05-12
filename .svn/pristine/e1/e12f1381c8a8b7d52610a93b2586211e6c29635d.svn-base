@@ -1,0 +1,378 @@
+<%@page import="com.seoul.dto.GuideBoardAttach"%>
+<%@page import="com.seoul.dto.Guide"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/reset.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="css/grid.css" type="text/css" media="screen">  
+    <link rel="stylesheet" href="css/guide2.css" type="text/css" media="screen">  
+    <script src="js/jquery-1.6.2.min.js" type="text/javascript"></script> 
+    <script src="js/jquery.easing.1.3.js" type="text/javascript"></script>
+    <script src="js/jcarousellite_1.0.1.js" type="text/javascript"></script>
+    <script src="js/jquery.galleriffic.js" type="text/javascript"></script>
+    <script src="js/jquery.opacityrollover.js" type="text/javascript"></script> 
+    	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script type="text/javascript">
+		$(function() {
+		$('#write').on('click', function(event) {
+			location.href = 'write.action';
+		});
+		});
+		$(function() {
+			$('#writee').on('click', function(event) {
+				location.href = 'writee.action';
+			});
+			});
+		
+/* 		$(function() {
+			$('#popup_win').on('click', function(event) {
+				location.href = 'download0.action';
+			})
+		}); */
+		
+		function popup_win() { //위치 left=500, top=400 에서 열리는 팝업창
+			window.open("fileupload.action", "", "width=400, height=300, left=500, top=400");
+			}
+	
+		$(document).ready(function() { 
+			$(".jCarouselLite").jCarouselLite({
+				  btnNext: ".next",
+				  btnPrev: ".prev",		  
+				  speed: 400,		  
+				  vertical: false,
+				  circular: true,
+				  easing:'easeOutQuart',
+				  visible: 4,
+				  start: 0,
+				  scroll: 1
+			 });
+		});
+	</script>    
+
+</head>
+<body id="page30">
+
+		<jsp:include page="/WEB-INF/views/include/header.jsp" />
+    
+    <div class="ic">More Website Templates  @ TemplateMonster.com - August22nd 2011!</div>
+       <section id="content">
+        <div class="bg-top">
+        	<div class="bg-top-2">
+                <div class="bg">
+                    <div class="bg-top-shadow">
+                    
+                        <div class="main">
+                            <div class="box">
+                                <div class="padding">
+                                    <div class="container_12">
+                                        <div class="wrapper">
+                                            <div class="grid_12">
+                                            	<div class="indent-left p2">
+                                                	<h3 class="p0">Latest Income</h3>
+                                                </div>
+                                                <!-- <div class="wrapper p4">
+                                                    <article class="grid_4 alpha">
+                                                        <div class="indent-left">
+                                                            <figure class="frame2 p2"><img src="images/page4-img1.jpg" alt="" /></figure>
+                                                            <p class="color-4 prev-indent-bot">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.</p>
+                                                            <p>Doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta.</p>
+                                                            <div class="wrapper">
+                                                            	<span class="price fleft">$45.99</span>
+                                                                <a class="button fright" href="#">Read More</a>
+                                                            </div>
+                                                        </div>
+                                                    </article>
+                                                    <article class="grid_4">
+                                                        <div class="indent3">
+                                                            <figure class="frame2 p2"><img src="images/page4-img2.jpg" alt="" /></figure>
+                                                            <p class="color-4 prev-indent-bot">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit.</p>
+                                                            <p>Sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt eque porro quisquam est, qui dolorem ipsum.</p>
+                                                            <div class="wrapper">
+                                                            	<span class="price fleft">$54.99</span>
+                                                                <a class="button fright" href="#">Read More</a>
+                                                            </div>
+                                                        </div>
+                                                    </article>
+                                                    <article class="grid_4 omega">
+                                                        <div class="indent-right">
+                                                            <figure class="frame2 p2"><img src="images/page4-img3.jpg" alt="" /></figure>
+                                                            <p class="color-4 prev-indent-bot">Feque porro quisquam est, qui dolorem ipsum quia dolor sit consectetur.</p>
+                                                            <p>Adipisci velit, sed quia non numquam eius modi tempora incidu labore et dolore magnam aliquam quaerat voluptatem.</p>
+                                                            <div class="wrapper">
+                                                            	<span class="price fleft">$38.99</span>
+                                                                <a class="button fright" href="#">Read More</a>
+                                                            </div>
+                                                        </div>
+                                                    </article>
+                                                </div> -->
+                                                <section id="content"> 
+           <!-- ///////////////////////////////////////////////////////////////////////////// -->         
+<!--               <div style="
+background-image: url(./images/guidebookmain.jpg);
+background-repeat: no-repeat;
+background-position: 5px 5px; 
+height: 200px;
+width: 100%;
+border: 1px solid;
+">
+</div> -->
+				
+				<div class="box-travel-guidebook">
+					<div class="item">
+							<span class="img" style="background-image:url(./images/book01.jpg)"> </span>
+							<span class="txt ellipsis fc-black fc-bold" style="text-align: center;">서울 관광 가이드북</span>
+							<div class="set-button" title="PDF 보기">
+								<a style="margin-left:0;" href="/comm/getFile?srvcId=GUIDEBOOK&amp;parentSn=41&amp;fileTy=ATTACH&amp;fileNo=9" onclick="dcsMultiTrack('DCS.dcssip','korean.visitseoul.net','DCS.dcsuri','/comm/getFile?srvcId=GUIDEBOOK&amp;parentSn=41&amp;fileTy=ATTACH&amp;fileNo=9','WT.down','서울 관광 가이드북');" class="pdfview button middle bold borderred">PDF View <span class="small regular">(176 MB)</span></a>
+									</div>
+						</div>
+					<div class="item">
+							<span class="img" style="background-image:url(./images/book02.jpg)"> </span>
+							<span class="txt ellipsis fc-black fc-bold" style="text-align: center;">서울 관광 지도</span>
+							<div class="set-button" title="PDF 보기">
+								<a style="margin-left:0;" href="/comm/getFile?srvcId=GUIDEBOOK&amp;parentSn=42&amp;fileTy=ATTACH&amp;fileNo=11" onclick="dcsMultiTrack('DCS.dcssip','korean.visitseoul.net','DCS.dcsuri','/comm/getFile?srvcId=GUIDEBOOK&amp;parentSn=42&amp;fileTy=ATTACH&amp;fileNo=11','WT.down','서울 관광 지도');" class="pdfview button middle bold borderred">PDF View <span class="small regular">(27 MB)</span></a>
+									</div>
+						</div>
+					<div class="item">
+							<span class="img" style="background-image:url(./images/book03.jpg)"> </span>
+							<span class="txt ellipsis fc-black fc-bold" style="text-align: center;">한류관광 가이드북</span>
+							<div class="set-button" title="PDF 보기">
+								<a style="margin-left:0;" href="/comm/getFile?srvcId=GUIDEBOOK&amp;parentSn=46&amp;fileTy=ATTACH&amp;fileNo=3" onclick="dcsMultiTrack('DCS.dcssip','korean.visitseoul.net','DCS.dcsuri','/comm/getFile?srvcId=GUIDEBOOK&amp;parentSn=46&amp;fileTy=ATTACH&amp;fileNo=3','WT.down','한류관광 가이드북');" class="pdfview button middle bold borderred">PDF View <span class="small regular">(6 MB)</span></a>
+									</div>
+						</div>
+					<div class="item">
+							<span class="img" style="background-image:url(./images/book05.jpg)"> </span>
+							<span class="txt ellipsis fc-black fc-bold" style="text-align: center;">서울 Best 100</span>
+							<div class="set-button" title="PDF 보기">
+								<a style="margin-left:0;" href="/comm/getFile?srvcId=GUIDEBOOK&amp;parentSn=282&amp;fileTy=ATTACH&amp;fileNo=1" onclick="dcsMultiTrack('DCS.dcssip','korean.visitseoul.net','DCS.dcsuri','/comm/getFile?srvcId=GUIDEBOOK&amp;parentSn=282&amp;fileTy=ATTACH&amp;fileNo=1','WT.down','서울 의료관광 가이드북');" class="pdfview button middle bold borderred">PDF View <span class="small regular">(15 MB)</span></a>
+									</div>
+						</div>
+					</div>
+					
+			</section>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                 <!-- ///////////////////////////////////////////////////////////////////////////// -->      
+                    
+                    
+                    
+                                                    
+     	<div id="pageContainer">
+		<div style="padding-top:25px;text-align:center">
+
+
+<%-- 
+			<div id="download" type="button" value="다운로드" 
+				style="width:300px;height:25px">	
+				<% for (GuideBoardAttach guideAttachment : guidee.getSub_Attachments()) { %>
+		       [ <a href="download.action?sub_attachno=<%= guideAttachment.getSub_AttachNo() %>">
+		       <%= guideAttachment.getSub_UserFile() %>
+		        </a> ]
+		        <br>
+		      <% } %>
+		      </div> --%>
+				<h2>상품 등록</h2>
+				<hr>
+
+				<!-- action에는 jsp 나 servlet 둘중 하나가 올수 있음 -->
+				<form action="file.action" method="post" enctype="multipart/form-data">
+					<br>
+					상품이미지 : <input type="file" name="pdf"><br> 
+					<input type="submit" value="등록"><br>
+					<input type="reset" value="취소"><br>
+					
+					<div title="다운로드">
+					<a style="margin-left:0;" href="filedownload.action?file_no=3">다운로드</a>
+					</div>
+					
+					
+				</form>
+
+
+
+			<input id="popup_win" type="button" value="팝업 사진올리기 버튼" onclick="popup_win()">
+
+
+
+			<input id="write" type="button" value="가이드 신청하기" 
+				style="width:300px;height:25px" />
+			<input id="writee" type="button" value="관광지도 신청하기" 
+				style="width:300px;height:25px" />
+			<br /><br />
+		 
+			<% List<Guide> guides = (List<Guide>)request.getAttribute("guides"); %>
+			
+			<table id="guidelist" style="border:1px; margin: 0 auto;">
+				<tr style="background-color:beige;height:25px">
+					<th style="width:50px">번호</th>
+					<th style="width:300px">제목</th>
+					<th style="width:150px">작성자</th>
+					<th style="width:120px">작성일</th>
+					<th style="width:120px">조회수</th>
+				</tr>
+				<% for (Guide guide : guides) { %>
+                    <tr style="height:25px">
+					<td style='text-align:center'><%= guide.getGub_BoardNo() %></td>
+					<td style='text-align:left; padding:5px;'>
+					<% for (int i = 0; i < guide.getGub_Depth(); i++) { %>
+					&nbsp;&nbsp;
+					<% } %>
+					<% if (guide.getGub_Depth() > 0) { %>
+					<img src="/seoul/images/re.gif">
+					<% } %>
+					<%-- <% if (guide.isGub_Deleted()) { //삭제된 글인 경우%>
+						<span id="deteled-message">[삭제된 글]</span>
+					<% } else { //삭제되지 않은 글인 경우 %>
+					
+					<!-- 게시글 목록중 하나를 눌렀을때 내용으로 넘어가는 작업 1단계 Rewrite -->
+					<!-- 목록보기로 돌아올때 페이지번호 정보를 같이 가지고 넘어올수 있도록 pageno도 추가 --> --%>
+						<a href="detail.action?gub_boardno=<%= guide.getGub_BoardNo() %>&pageno=<%= request.getAttribute("pageno") %>" style='text-decoration:none'> 
+							<%= guide.getGub_Title() %>
+						</a>	
+					<%-- <% } %>	 --%>
+					</td>
+					<td style='text-align:center'><%= guide.getGub_Writer() %></td>
+					<td style='text-align:center'><%= guide.getGub_RegDate() %></td>
+					<td style='text-align:center'><%= guide.getGub_ReadCount() %></td>
+				</tr>
+				<% } %>
+				</table> 
+				<br><br>
+		<%= request.getAttribute("pager").toString() %>
+		</div>                         
+                                                 
+                                                    
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>	
+        </div>
+
+       
+          
+        <div class="bg-bot">
+        	<div class="main">
+            	<div class="container_12">
+                	<div class="wrapper">
+                    	<article class="grid_4">
+                        	<h3 class="p2">New Furniture</h3>
+                            <div class="wrapper">
+                            	<figure class="img-indent frame2"><img src="images/page4-img7.jpg" alt="" /></figure>
+                                <p class="prev-indent-bot color-4">At vero eos eaccusa mus etusto odio.</p>
+                                <p class="prev-indent-bot">Tium voluptatum del eniti atque corrupti quos dolores.</p>
+                                <a class="button" href="#">View More</a>
+                            </div>
+                        </article>
+                        <article class="grid_8">
+                        	<h3 class="prev-indent-bot2">Our Pricing</h3>
+                            <div class="wrapper">
+                            	<div class="grid_4 alpha">
+                                	<div class="indent-right2">
+                                        <ul class="price-list">
+                                            <li><span>$6700.00</span><a href="#">Totam rem aperiam eaque</a><strong>&nbsp;</strong></li>
+                                            <li><span>$4370.00</span><a href="#">Inventore veritatis quasi</a><strong>&nbsp;</strong></li>
+                                            <li><span>$5780.00</span><a href="#">Nemo enim ipsam voluptatem</a><strong>&nbsp;</strong></li>
+                                            <li><span>$2300.00</span><a href="#">Voluptas sit aspernatur aut</a><strong>&nbsp;</strong></li>
+                                            <li><span>$3650.00</span><a href="#">Sed quia consequuntur magni</a><strong>&nbsp;</strong></li>
+                                            <li class="last"><span>$7900.00</span><a href="#">Ratione voluptatem sequi</a><strong>&nbsp;</strong></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="grid_4 omega">
+                                	<div class="indent-right2">
+                                        <ul class="price-list">
+                                            <li><span>$6700.00</span><a href="#">Totam rem aperiam eaque</a><strong>&nbsp;</strong></li>
+                                            <li><span>$4370.00</span><a href="#">Inventore veritatis quasi</a><strong>&nbsp;</strong></li>
+                                            <li><span>$5780.00</span><a href="#">Nemo enim ipsam voluptatem</a><strong>&nbsp;</strong></li>
+                                            <li><span>$2300.00</span><a href="#">Voluptas sit aspernatur aut</a><strong>&nbsp;</strong></li>
+                                            <li><span>$3650.00</span><a href="#">Sed quia consequuntur magni</a><strong>&nbsp;</strong></li>
+                                            <li class="last"><span>$7900.00</span><a href="#">Ratione voluptatem sequi</a><strong>&nbsp;</strong></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    		 <jsp:include page="/WEB-INF/views/include/footer.jsp" />
+    		 
+    <script type="text/javascript">
+			$(window).load(function() {
+			// We only want these styles applied when javascript is enabled
+			$('div.navigation').css({'width' : '320px', 'float' : 'right'});
+			$('div.content').css('display', 'block');
+	
+			// Initially set opacity on thumbs and add
+			// additional styling for hover effect on thumbs
+			var onMouseOutOpacity = 0.5;
+			$('#thumbs ul.thumbs li span').opacityrollover({
+				mouseOutOpacity:   onMouseOutOpacity,
+				mouseOverOpacity:  0.0,
+				fadeSpeed:         'fast',
+				exemptionSelector: '.selected'
+			});
+			
+			// Initialize Advanced Galleriffic Gallery
+			var gallery = $('#thumbs').galleriffic({
+				delay:                     7000,
+				numThumbs:                 12,
+				preloadAhead:              6,
+				enableTopPager:            false,
+				enableBottomPager:         false,
+				imageContainerSel:         '#slideshow',
+				controlsContainerSel:      '',
+				captionContainerSel:       '',
+				loadingContainerSel:       '',
+				renderSSControls:          true,
+				renderNavControls:         true,
+				playLinkText:              'Play Slideshow',
+				pauseLinkText:             'Pause Slideshow',
+				prevLinkText:              'Prev',
+				nextLinkText:              'Next',
+				nextPageLinkText:          'Next',
+				prevPageLinkText:          'Prev',
+				enableHistory:             true,
+				autoStart:                 7000,
+				syncTransitions:           true,
+				defaultTransitionDuration: 900,
+				onSlideChange:             function(prevIndex, nextIndex) {
+					// 'this' refers to the gallery, which is an extension of $('#thumbs')
+					this.find('ul.thumbs li span')
+						.css({opacity:0.5})
+				},
+				onPageTransitionOut:       function(callback) {
+					this.find('ul.thumbs li span').css({display:'block'});
+				},
+				onPageTransitionIn:        function() {
+					this.find('ul.thumbs li span').css({display:'none'});
+				}
+			});
+		});
+	</script>
+</body>
+</html>

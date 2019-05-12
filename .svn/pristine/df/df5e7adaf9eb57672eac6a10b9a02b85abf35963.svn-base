@@ -1,0 +1,15 @@
+package com.seoul.service;
+
+import com.seoul.dao.ContactsBoardDao;
+import com.seoul.dto.ContactsBoard;
+
+public class ContactsBoardService {
+
+	public void writeBoard(ContactsBoard board) {
+		ContactsBoardDao dao = new ContactsBoardDao();
+		dao.insertBoard(board);
+	}
+
+	
+
+}

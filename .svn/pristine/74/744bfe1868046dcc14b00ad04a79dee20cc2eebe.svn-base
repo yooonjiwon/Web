@@ -1,0 +1,161 @@
+package com.seoul.dao;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.seoul.dto.Member;
+
+public class MemberDao {
+
+
+	
+	public void insertMember(Member member) {
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		
+		try {
+
+			conn = ConnectionHelper.getConnection("oracle");
+			String sql="INSERT INTO member (m_memberid, m_name, m_passwd, m_email, m_birthday, m_country_code, m_phone, m_gender, m_nation, m_interest) VALUES (?,?,?,?,?,?,?,?,?,?)";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, member.getMemberId());
+			pstmt.setString(2, member.getName());
+			pstmt.setString(3, member.getPasswd());
+			pstmt.setString(4, member.getEmail());
+			pstmt.setString(5, member.getBirthday());
+			//pstmt.setString(6, member.getNickname());
+			pstmt.setString(6, member.getCountry_code());
+			pstmt.setString(7, member.getPhone());
+			pstmt.setString(8, member.getGender());
+			pstmt.setString(9, member.getNation());
+			pstmt.setString(10, member.getInterest());
+			pstmt.executeUpdate();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try{pstmt.close();} catch(Exception ex) {}
+			try{pstmt.close();} catch(Exception ex) {}
+		}
+		
+	}
+	
+	public Member selectMemberByIdAndPasswd(String memberId, String passwd){
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		Member member = null;
+		try {
+		conn = ConnectionHelper.getConnection("oracle");
+		String sql = "SELECT m_memberid, m_email, m_name FROM member WHERE m_memberid= ? AND m_passwd= ?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, memberId);
+		pstmt.setString(2, passwd);
+		rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			member=new Member();
+			member.setMemberId(rs.getString(1));
+			member.setEmail(rs.getString(2));
+			member.setName(rs.getString(3));
+		}
+		
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try{rs.close();} catch (Exception ex) {}
+			try{pstmt.close();} catch (Exception ex) {}
+			try{rs.close();} catch (Exception ex) {}
+		}
+		
+		return member;
+	}
+	
+	
+	
+
+	public void updateMember(Member member) {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			//1. Driver 등록
+			Class.forName("oracle.jdbc.OracleDriver");
+			//2. 연결 만들기
+			conn = DriverManager.getConnection(
+					"jdbc:oracle:thin:@localhost:1521:xe", //연결대상 
+					"demoweb", "oracle");//계정정보
+			String sql = "UPDATE member SET (m_name, m_email, m_birthday, m_country_code, m_phone, m_gender, m_nation, m_interest) VALUES(?,?,?,?,?,?,?,?) WHERE memberid=?";
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, member.getName());
+			pstmt.setString(2, member.getEmail());
+			pstmt.setString(3, member.getBirthday());
+			pstmt.setString(4, member.getCountry_code());
+			pstmt.setString(5, member.getPhone());
+			pstmt.setString(6, member.getGender());
+			pstmt.setString(7, member.getNation());
+			pstmt.setString(8, member.getInterest());
+			pstmt.setString(9, member.getMemberId());
+		
+		} catch (Exception e) {
+		}
+	//2. 
+		
+	}
+
+	public int insertBoard(Member member) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;    //for insertion
+		PreparedStatement pstmt2 = null;  //for select
+		ResultSet rs = null;
+		int newBoardNo = -1; //-1은 임의의 값. 0도 상관없음
+		try {
+			//1. Driver 등록
+			Class.forName("oracle.jdbc.OracleDriver");
+			//2. 연결 만들기
+			conn = DriverManager.getConnection(
+					"jdbc:oracle:thin:@210.16.214.202:1521:xe", //연결대상 
+					"seoul", "789123"); //계정정보
+			//3. SQL 작성 및 명령 만들기
+			String sql = "INSERT INTO member (m_memberid, m_name, m_email, m_birthday, m_country_code, m_phone, m_gender, m_nation, m_interest) " +
+						 	"VALUES (?,?,?,?,?,?,?,?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, member.getMemberId());
+			pstmt.setString(2, member.getName());
+			pstmt.setString(3, member.getEmail());
+			pstmt.setString(4, member.getBirthday());
+			pstmt.setString(5, member.getCountry_code());
+			pstmt.setString(6, member.getPhone());
+			pstmt.setString(7, member.getGender());
+			pstmt.setString(8, member.getNation());
+			pstmt.setString(9, member.getInterest());
+			//4. 명령 실행
+			pstmt.executeUpdate(); //insert, update, delete 구문 실행 메서드
+			
+			//위에서 insert된 글의 글번호 조회 
+			//-> 마지막으로 호출된 nextval의 값을 조회
+			sql = "SELECT board_sequence.currval FROM DUAL";
+			pstmt2 = conn.prepareStatement(sql);
+			rs = pstmt2.executeQuery();
+			rs.next();
+			newBoardNo = rs.getInt(1);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			//6. 연결 종료
+			try { rs.close(); } catch (Exception ex) {}
+			try { pstmt.close(); } catch (Exception ex) {}
+			try { pstmt2.close(); } catch (Exception ex) {}
+			try { conn.close(); } catch (Exception ex) {}
+		}
+
+		return newBoardNo;
+	}
+
+	
+	
+}

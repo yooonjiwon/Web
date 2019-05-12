@@ -1,0 +1,51 @@
+package com.seoul.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.demoweb.dao.BoardDao;
+import com.seoul.dao.GuideBoardDao;
+import com.seoul.dto.Guide;
+import com.seoul.dto.GuideBoardComment;
+
+public class GuideBoardService {
+
+	public void writeBoard(Guide guide) {
+		GuideBoardDao dao = new GuideBoardDao();
+		dao.insertBoard(guide);
+	}
+
+	public List<Guide> findBoardList(int first, int last) {
+		GuideBoardDao dao = new GuideBoardDao();
+		List<Guide> guides = dao.selectBoardList2(first, last);
+		return guides;
+	}
+
+	public int getGuideBoardCount() {
+		GuideBoardDao dao = new GuideBoardDao();
+		int count = dao.getBoardCount();
+		return count;
+	}
+
+	public Guide findBoardByBoardNo(int gub_BoardNo) {
+		GuideBoardDao guideBoardDao = new GuideBoardDao();
+		Guide board = guideBoardDao.selectBoardByBoardNo(gub_BoardNo);
+		
+		
+		ArrayList<GuideBoardComment> guideComments = guideBoardDao.selectCommentByBoardNo(gub_BoardNo);
+		board.setGub_comments(guideComments);
+		return board;
+	}
+
+	public void increaseReadCount(int gub_BoardNo) {
+		GuideBoardDao boardDao = new GuideBoardDao();
+		boardDao.updateReadCount(gub_BoardNo);
+		
+	}
+
+
+
+
+	
+
+}

@@ -1,0 +1,203 @@
+<%@page import="com.seoul.dto.Member"%>
+<%@page import="com.seoul.dto.Guide"%>
+<%@page import="com.seoul.dto.GuideBoardComment"%>
+<%@page import="com.seoul.dao.MemberDao"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title></title>
+<meta charset="utf-8">
+<jsp:include page="/WEB-INF/views/include/common.jsp" />
+<!-- <link rel="stylesheet" href="css/style2.css" type="text/css" media="screen"> -->
+</head>
+
+<script type="text/javascript">
+	
+
+	/* $(function() {
+
+		$('#country_code option[value="${loginuser.country_code}"]').attr('selected', 'selected'); //selected 함수 정보 불러오기
+		$('#nation option[value="${loginuser.nation}"]').attr('selected', 'selected');
+
+ 		$('button#update').on('click', function(event) {
+			$('form#mypageedit').submit();
+			event.preventDefault(); //<a>의 기본동작 중단시킴(다른곳으로 이동하지 못하도록)
+		});
+
+	}); */
+</script>
+
+
+<body id="page1">
+
+<jsp:include page="/WEB-INF/views/include/header3.jsp" />
+
+<!-- content -->
+    <section id="content">
+        <div class="bg-top">
+        	<div class="bg-top-2">
+                <div class="bg">
+                    <div class="bg-top-shadow">
+                        <div class="main">
+                            <div class="box">
+                                <div class="padding">
+                                    <div class="container_12">
+                                        <div class="wrapper">
+                                        
+
+<form id="mypageedit" action="myvolunteer.action" method="post" style='left: calc(50%);'>
+                                        
+        <h2>나의 신청</h2>
+        
+      
+        <fieldset style='display=flex'>
+
+        
+		  <legend><span class="number">기본정보</span></legend>
+		  
+		 
+         <% Member member = (Member)session.getAttribute("loginuser"); %>
+         
+         
+         		<input type="hidden" name="curPage" value="1"/>
+	<section id="content">
+		<div class="cnt-faqitem view">
+			<div class="header">
+				<h2 style="font-weight:bold;">
+					<% Guide guide = (Guide)request.getAttribute("guide"); %> 
+					
+					<label for="memberId">아이디(Id): <%= member.getMemberId() %></label>
+					<label for="gub_writer">아이디(Id): <%= guide.getGub_Writer() %></label>
+					<%-- <label for="gud_phone">핸드폰: <%= guide.getGub_Phone() %></label> --%>
+					
+					
+					<%-- 작성일 :&nbsp; <span class="fc-black2"><%= guide.getGub_RegDate() %></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					조회수 :&nbsp; <span class="fc-black2"><%= guide.getGub_ReadCount() %></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					작성자 ID :&nbsp; <span class="fc-black2"><%= guide.getGub_Writer() %></span><br><br>
+					이메일 :&nbsp; <span class="fc-black2"><%= guide.getGub_Email() %></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					연락처 :&nbsp; <span class="fc-black2"><%= guide.getGub_Phone() %></span><br><br>
+					가이드 희망 대상 :&nbsp; <span class="fc-black2"><%= guide.getGub_Target() %></span><br><br>
+					가이드 희망 분야 :&nbsp; <span class="fc-black2"><%= guide.getGub_HopeArea() %></span><br><br>
+					작성자 이름 :&nbsp; <span class="fc-black2"><%= guide.getGub_Name() %></span><br><br><br>
+					-&nbsp; <span class="fc-black2" style="font-size:28px;"><%= guide.getGub_Title() %></span><br><br> --%>
+					
+<%-- 					 <input type="text" id="name" name="gub_writer" value=" <%= guide.getGub_Writer() %> " >
+					 <input type="text" id="name" name="gub_regdate" value=" <%= guide.getGub_RegDate() %> " > --%>
+					</h2>
+				
+				<%-- <h4 class="heading2 regular fc-blue" style="font-size:24px;"><%= guide.getGub_Intro() %></h4><br><br> --%>
+			</div>
+			</div>
+			</section>
+			<%-- 
+			<div class="buttons">
+			
+			<% if (member.getMemberId().equals(guide.getGub_Writer())) { %>
+					[&nbsp;<a id="delete" href='#' data-boardno="<%= guide.getGub_BoardNo() %>">삭제</a>&nbsp;]
+		         	[&nbsp;<a href='update.action?gub_boardno=<%= guide.getGub_BoardNo() %>&pageno=<%= request.getAttribute("pageno") %>'>수정</a>&nbsp;]
+		    <% } %> 
+		         	
+		        	[&nbsp;<a href='list.action?pageno=<%= request.getAttribute("pageno") %>'>목록보기</a>&nbsp;] <br>
+			</div>
+			
+
+			
+						<!-- comment 쓰기 영역 -->
+			<!-- detail화면에서 댓글다는 영역을 만드는 코드 -->
+			<!-- hidden방식으로 boardno, pageno넘어가고 content정보가 서블릿으로 넘어간다-->
+		<br /><br />
+				
+		 <% if (session.getAttribute("loginuser") != null) { %> 
+		<form id="commentform" action="writecomment.action" method="post">
+			<input type="hidden" name="guc_boardno" value="<%= guide.getGub_BoardNo() %>" />
+			<input type="hidden" name="pageno" value='<%= request.getAttribute("pageno") %>' />
+			<input type="hidden" name="guc_writer" value="<%= guide.getGub_Writer() %>" />
+			<table style="width:600px;border:solid 1px;margin:0 auto">
+	            <tr>
+	                <td style="width:550px">	                	
+	                    <textarea name="guc_content" id="comment_content"
+	                    	style="width:550px" rows="3"></textarea>	                    
+	                </td>
+	                <td style="width:50px;vertical-align:middle">
+	                	<a id="writecomment" href="#" style="text-decoration:none">
+	                		등록
+	                	</a>
+	                </td>
+	            </tr>                    
+	        </table>
+        </form>
+         <% } %> 
+        
+        <hr align="center" style="width:600px;" />
+        
+        
+        <!-- ---------------------------------------------------------------------------------- -->
+
+		<!-- comment 표시영역 -->
+
+
+			<% for (GuideBoardComment bcomment : guide.getGub_Comments()) { %> <!-- 데이터가 입력될때마다 tr하나씩-->
+			
+			<div class="cnt-faqitem reply">
+			<div class="header">
+				<p class="label fc-bold">답변</p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= bcomment.getGuc_Content().replace("\r\n", "<br>") %>
+				<p class="date fc-bold fc-grey3">
+					작성일 : <span class="fc-black2">&nbsp;<%= bcomment.getGuc_RegDate() %></span>&nbsp;&nbsp;&nbsp;&nbsp;
+					작성자 : <span class="fc-black2">&nbsp;<%= bcomment.getGuc_Writer() %></span>
+					<div style='display: <%= member.getMemberId().equals(bcomment.getGuc_Writer()) ? "block" : "none" %>'>
+	                    	<a id="edit" data-commentno='<%= bcomment.getGuc_CommentNo() %>' href="#">편집</a>&nbsp;
+	                    	<a id="deletecomment" href="#" data-commentno='<%= bcomment.getGuc_CommentNo() %>'
+													data-boardno='<%= guide.getGub_BoardNo() %>'
+													data-pageno='<%= request.getAttribute("pageno") %>'>삭제</a>
+					</div>
+					
+					
+					
+				</p>
+			</div>
+		</div>
+			
+		
+	                
+	                   <div id='commentedit<%= bcomment.getGuc_CommentNo() %>' style="display: none"> <!-- 삭제를 눌렀을때 -->
+						<%= bcomment.getGuc_Writer() %>&nbsp;&nbsp; 
+						[<%= bcomment.getGuc_RegDate() %>] 
+						<br /><br />
+						<form id="commenteditform<%= bcomment.getGuc_CommentNo() %>" action="updatecomment.action" method="post">
+						<input type="hidden" name="guc_boardno" value="<%= guide.getGub_BoardNo() %>" />
+						<input type="hidden" name="pageno" value='<%= request.getAttribute("pageno") %>' />
+						<input type="hidden" name="guc_commentno" value="<%= bcomment.getGuc_CommentNo() %>" />
+						<textarea name="guc_content" style="width: 600px" rows="3" maxlength="200"><%= bcomment.getGuc_Content() %></textarea>
+						</form>
+						<div>
+							<!-- bcomment.getCommentNo 를 이용해서 커맨트 넘버를 같이 저장하면서 돌수있게 만듬 -->
+							<a id="modify" data-commentno='<%= bcomment.getGuc_CommentNo() %>' href="#">수정</a> 
+							&nbsp; 
+							<a id="cancel" data-commentno='<%= bcomment.getGuc_CommentNo() %>' href="#">취소</a>
+						</div>
+					</div> 
+		<% } %>	 --%>
+        
+           </fieldset>
+           </form>
+                                                                              
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>	
+        </div>
+   </section>    
+    
+	<!--==============================footer=================================-->
+     		 <jsp:include page="/WEB-INF/views/include/footer.jsp" />		
+		
+
+</body>
+</html>

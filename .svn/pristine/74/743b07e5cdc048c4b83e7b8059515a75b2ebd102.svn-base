@@ -1,0 +1,20 @@
+package com.seoul.service;
+
+import com.seoul.dao.MemberDao;
+import com.seoul.dto.Member;
+
+public class MemberService {
+
+	public void registerMember(Member member) {
+		MemberDao memberDao = new MemberDao();
+		memberDao.insertMember(member);
+	}
+	
+	public Member authenticate(String memberId, String passwd) {
+		MemberDao dao = new MemberDao();
+		Member member = dao.selectMemberByIdAndPasswd(memberId, passwd);
+		return member;
+	}
+	
+
+}

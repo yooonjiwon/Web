@@ -1,0 +1,51 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+    
+		
+    <header>
+    	<div class="row-1">
+        	<div class="main">
+            	<div class="container_12">
+                	<div class="grid_12">
+                    	<nav>
+                            <ul class="menu">
+                                <li><a href="index.jsp">About Us</a></li>
+                                <li><a href="services.jsp">Services</a></li>
+                                <li><a href="seoulmate.jsp">Seoul mate</a></li>
+                                <li><a href="pricing.jsp">Pricing</a></li>
+                                <li><a href="contacts.jsp">Contacts</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="row-2">
+        	<div class="main">
+            	<div class="container_12">
+                	<div class="grid_9">
+                    	<h1>
+                            <a class="logo" href="index.jsp">hello<strong>♡</strong>seoul</a>
+                            <span>-by YB</span>
+                        </h1>
+                    </div>
+                    <div class="grid_3">
+                    	<br><br><br>
+                        &nbsp;&nbsp;&nbsp;	
+                                    <a class="login-button" href="loginform.html" onClick="document.getElementById('login-button').submit()"
+style="font-size: 25px" ><span>Login</span></a>	
+                               			&nbsp;&nbsp;&nbsp;			
+<a class="login-button" href="loginform.html" onClick="document.getElementById('login-button').submit()"
+style="font-size: 25px"><span>Signup</span></a>	
+                     </div>
+                     <div class="clear"></div>
+                </div>
+            </div>
+        </div>    	
+    </header><div class="ic">More Website Templates  @ TemplateMonster.com - August22nd 2011!</div>
+    		
+		
+		
+		
+		

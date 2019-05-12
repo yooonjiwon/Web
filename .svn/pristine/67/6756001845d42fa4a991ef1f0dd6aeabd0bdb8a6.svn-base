@@ -1,0 +1,79 @@
+package com.seoul.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import com.seoul.dto.Member;
+
+public class MyPageDao {
+
+	public Member selectMyPageByMemberId(String memberId) {	 //프로필 수정을 클릭하면 loginuser의 정보를 가져옴.
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		Member bringinfo = null;
+		ResultSet rs = null;
+
+		try {
+			conn = ConnectionHelper.getConnection("oracle");
+			String sql = "SELECT m_name, m_email, m_birthday, m_country_code, m_phone, m_gender, m_nation, m_interest FROM member WHERE m_memberid = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				bringinfo = new Member();
+				bringinfo.setName(rs.getString(1));
+				bringinfo.setEmail(rs.getString(2));
+				bringinfo.setBirthday(rs.getString(3));
+				bringinfo.setCountry_code(rs.getString(4));
+				bringinfo.setPhone(rs.getString(5));
+				bringinfo.setGender(rs.getString(6));
+				bringinfo.setNation(rs.getString(7));
+				bringinfo.setInterest(rs.getString(8));
+			}
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			try { rs.close(); } catch (Exception ex) {}
+			try { pstmt.close(); } catch (Exception ex) {}
+			try { conn.close(); } catch (Exception ex) {}
+		}
+		return bringinfo;
+	}
+	
+	
+	public void updateMyPage(Member member) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = ConnectionHelper.getConnection("oracle");
+			// SQL 작성 및 명령 만들기
+			String sql = "UPDATE board SET m_name =?, m_email =?, m_birthday=?, m_country_code=?, m_phone=?, m_gender=?, m_nation=?, m_interest=? WHERE m_memberid = ?";
+						 
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, member.getName());
+			pstmt.setString(2, member.getEmail());
+			pstmt.setString(3, member.getBirthday());
+			pstmt.setString(4, member.getCountry_code());
+			pstmt.setString(5, member.getPhone());
+			pstmt.setString(6, member.getGender());
+			pstmt.setString(7, member.getNation());
+			pstmt.setString(8, member.getInterest());
+			//명령 실행
+			pstmt.executeQuery();//select 구문 실행 메서드
+			//결과가 있을 경우 처리
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			//연결 종료
+			try { pstmt.close(); } catch (Exception ex) {}
+			try { conn.close(); } catch (Exception ex) {}
+		}	
+	}
+	
+	
+}

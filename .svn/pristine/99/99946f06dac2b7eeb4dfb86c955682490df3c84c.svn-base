@@ -1,0 +1,86 @@
+<%@page import="com.seoul.dto.Member"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+
+
+
+    <header>
+    	<div class="row-1">
+        	<div class="main">
+            	<div class="container_12">
+                	<div class="grid_12">
+                    	<nav>
+                            <ul class="menu">
+                                <li><a href="index.jsp">About Us</a></li>
+                                <li><a href="services.jsp">Services</a></li>
+                                <li><a href="list.action">Seoul mate</a></li>
+                                <li><a href="pricing.jsp">Pricing</a></li>
+                                <li><a href="contacts.action">Contacts</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        
+        
+        <div class="row-2">
+        	<div class="main">
+            	<div class="container_12">
+                	<div class="grid_9">
+                    	<h1>
+                            <a class="logo" href="/seoul/index.action">hello<strong>♡</strong>seoul</a>
+                           
+                        </h1>
+                    </div>
+                    <div class="grid_3">
+ 
+                     </div>
+
+                   </div> 
+                     <div class="clear"></div>
+                </div>
+            </div>
+            
+            
+            
+        <div class="row-3">
+        	<div class="main">
+            	<div class="container_12">
+                	<div class="grid_12">
+                		<div class="container">
+                			
+                    		<% Member member = (Member)session.getAttribute("loginuser"); %>
+                     		<% if (member == null) { %>
+                             <a href="/seoul/account/login.action" class="dropbtn">Login</a>
+                             <a href="/seoul/account/signup.action" class="dropbtn">Signup</a>
+                     		<% } else { %>
+                     		<div class="dropdown">
+                     		<button class="dropbtn" onclick="myFunction()">
+                     		<%= member.getName() %></button>
+                     		<div class="dropdown-content" id="myDropdown">
+						      <a href="#">프로필수정</a>
+						      <a href="#">인증현황</a>
+						      <a href="#">관심여행지</a>
+						      <a href="#">이벤트</a>
+						      <a href="#">쿠폰</a>
+						      <a href="#">후기</a>
+						      <a href="#">문의</a>
+						      <a href="/seoul/account/logout.action">로그아웃</a>
+					  		</div>
+                     	    <% } %>
+                  			</div>
+                  		</div>
+                    </div>
+                </div>
+             </div>
+                <div class="clear"></div>
+         </div>
+      
+
+    </header>
+    		
+		
+		
+		
+		

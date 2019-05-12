@@ -1,0 +1,85 @@
+<%@page import="com.seoul.dto.Guide"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+ 
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>글쓰기</title>
+	<link rel="Stylesheet" href="/demoweb/styles/default.css" />
+	<link rel="Stylesheet" href="/demoweb/styles/input2.css" />	
+	<style type="text/css">
+	a { text-decoration: none }
+	</style>
+	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+	<script type="text/javascript">
+	$(function() {
+		$('a#update').on('click', function(event) {
+			$('form#updateform').submit(); //writeform을 서버로 전송처리
+			event.preventDefault(); //<a>의 기본기능(화면 리프레시) 수행을 막는 명령
+		});
+	});
+	
+	</script>
+</head>
+<body>
+
+	<div id="pageContainer">
+	
+		<jsp:include page="/WEB-INF/views/include/header.jsp" />
+		
+		<div style="padding-top:25px;text-align:center">
+		<div id="inputcontent">
+		    <div id="inputmain">
+		        <div class="inputsubtitle">게시판 글 쓰기</div>
+		        <form id="updateform" action="update.action" method="post">
+		        <% Guide guide = (Guide)request.getAttribute("guide"); %>
+		        <table>
+		         	<tr>
+		                <th>글번호</th>
+		                <td>
+		                   <%-- <%= guide.getGub_BoardNo() %> --%>
+		                   <input type="hidden" name="gub_boardno" 
+		                    	value="<%= guide.getGub_BoardNo() %>" >
+		                </td>
+		            </tr>
+		            <tr>
+		                <th>제목</th>
+		                <td>
+		                    <input type="text" name="gub_title" style="width:280px"
+		                    	value="<%= guide.getGub_Title() %>" />
+		                </td>
+		            </tr>
+		            <tr>
+		                <th>작성자</th>
+		                <td>
+		                	<%-- <% Member member = (Member)session.getAttribute("loginuser"); %>
+		                	<%= member.getMemberId() %> --%>
+		                	 <input type="text" name="gub_writer" style="width:280px"
+		                    	value="<%= guide.getGub_Writer() %>" />
+		                </td>
+		            </tr>
+		            <tr>
+		                <th>내용</th>
+		                <td>		                    
+		                    <textarea name="gub_intro" cols="76" rows="15"><%= guide.getGub_Intro() %></textarea>
+		                </td>
+		            </tr>
+		        </table>
+		        <div class="buttons">
+		        	<!-- <form>의 submit수행 -->	        	
+		        	<a id="update" href="#">글수정</a>
+		        	&nbsp;&nbsp;
+		        	<a href='/seoul/detail.action?gub_boardno=<%= guide.getGub_BoardNo() %>&pageno=<%= request.getAttribute("pageno") %>'>취소</a>
+		        </div>
+		        </form>
+		    </div>
+		</div>   	
+	
+	</div>
+	</div>
+
+</body>
+</html>

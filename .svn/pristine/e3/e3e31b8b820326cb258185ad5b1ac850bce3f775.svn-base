@@ -1,0 +1,94 @@
+<%@page import="com.seoul.dto.Member"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+
+	
+    <header>
+    	<div class="row-1">
+        	<div class="main">
+            	<div class="container_12">
+                	<div class="grid_12">
+                    	<nav>
+                            <ul class="menu">
+                                <li><a href="index.jsp">About Us</a></li>
+                                <li><a href="services.jsp">Services</a></li>
+                                <li><a href="list.action">Seoul mate</a></li>
+                                <li><a href="pricing.jsp">Pricing</a></li>
+                                <li><a href="contacts.action">Contacts</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        
+        <div class="row-2">
+        	<div class="main">
+            	<div class="container_12">
+                	<div class="grid_9">
+                    	<h1>
+                            <a class="logo" href="/seoul/index.action">hello<strong>♡</strong>seoul</a>
+                            <span>-by YB</span>
+                        </h1>
+                    </div>
+                    <div class="grid_3">
+                    	<br><br>
+                        &nbsp;&nbsp;&nbsp;	
+                        <div class="links">
+                     		<% Member member = (Member)session.getAttribute("loginuser"); %>
+                     		<% if (member == null) { %>
+
+
+
+
+
+
+                     		<% } else { %>
+                     		<div class="dropdown">
+                     		<a href="javascript:void(0)" class="dropbtn">
+                     		<%= member.getName() %></a>
+                     		<div class="dropdown-content">
+					      <a href="#">프로필수정</a>
+					      <a href="#">인증현황</a>
+					      <a href="#">관심여행지</a>
+					      <a href="#">이벤트</a>
+					      <a href="#">쿠폰</a>
+					      <a href="#">후기</a>
+					      <a href="#">문의</a>
+					      <a href="#">로그아웃</a>
+					    </div>
+                     		</div>
+                     		<a href="/seoul/account/logout.action">Signout</a> 
+                     		<% } %>
+                     		
+                     </div>
+                     </div>
+
+                   </div> 
+                     <div class="clear"></div>
+                </div>
+            </div>
+        <div class="row-3">
+        	<div class="main">
+            	<div class="container_12">
+                	<div class="grid_12">
+                    	<nav>
+                            <ul class="mymenu">
+                                <li><a href="/seoul/account/login.action">Login</a>
+                                <a href="/seoul/account/signup.action">Signup</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        
+        
+        	
+    </header><div class="ic">More Website Templates  @ TemplateMonster.com - August22nd 2011!</div>
+    		
+		
+		
+		
+		

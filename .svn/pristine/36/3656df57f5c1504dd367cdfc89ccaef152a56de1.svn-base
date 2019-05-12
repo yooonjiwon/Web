@@ -1,0 +1,280 @@
+<%@page import="com.seoul.dto.Guide"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/reset.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="css/grid.css" type="text/css" media="screen">   
+    <script src="js/jquery-1.6.2.min.js"></script>    
+   	<script type="text/javascript">
+  	$(function() {
+  		$('#write').on('click', function(event) {
+  			location.href = 'write.action';
+  		});
+  	});
+	</script>
+         
+	<!--[if lt IE 7]>
+        <div style=' clear: both; text-align:center; position: relative;'>
+            <a href="http://www.microsoft.com/windows/internet-explorer/default.aspx?ocid=ie6_countdown_bannercode"><img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0"  alt="" /></a>
+        </div>
+	<![endif]-->
+    <!--[if lt IE 9]>
+   		<script type="text/javascript" src="js/html5.js"></script>
+        <link rel="stylesheet" href="css/ie.css" type="text/css" media="screen">
+	<![endif]-->
+</head>
+<body id="page2">
+	<!--==============================header=================================-->
+    <header>
+    	<div class="row-1">
+        	<div class="main">
+            	<div class="container_12">
+                	<div class="grid_12">
+                    	<nav>
+                            <ul class="menu">
+                                <li><a href="index.html">About Us</a></li>
+                                <li><a class="active" href="services.html">Services</a></li>
+                                <li><a href="catalogue.html">Catalogue</a></li>
+                                <li><a href="pricing.html">Pricing</a></li>
+                                <li><a href="contacts.html">Contacts</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="row-2">
+        	<div class="main">      
+        
+            	<div class="container_12">
+                	<div class="grid_9">
+                    	<h1>
+                            <a class="logo" href="index.html">Hello<strong>♥</strong>Seoul</a>
+                            <span>Design</span>
+                        </h1>
+                    </div>
+                    <div class="grid_3">
+                    	<form id="search-form" method="post" enctype="multipart/form-data">
+                            <fieldset>	
+                                <div class="search-field">
+                                    <input name="search" type="text" />
+                                    <a class="search-button" href="" onClick="document.getElementById('search-form').submit()"><span>search</span></a>	
+                                </div>						
+                            </fieldset>
+                        </form>
+                     </div>
+                     <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </header><div class="ic">More Website Templates  @ TemplateMonster.com - August22nd 2011!</div>    
+    
+<!-- content -->
+    <section id="content">
+        <div class="bg-top">
+        	<div class="bg-top-2">
+                <div class="bg">
+                    <div class="bg-top-shadow">
+                        <div class="main">
+                            <div class="box p3">
+                                <div class="padding">
+                                    <div class="container_12">
+                                        <div class="wrapper">
+                                            <div class="grid_12">
+                                                <div class="wrapper">
+                                                    <article class="grid_4 alpha">
+                                                        <div class="indent">
+                                                            <h3 class="prev-indent-bot2">Seoul Tour</h3>
+                                                            <ul class="list-2">
+                                                                <li><a href="write.action">도봉, 강북, 성북, 노원 </a></li>
+                                                                <li><a href="#">동대문, 중랑, 성동, 광진</a></li>
+                                                                <li><a href="#">강동, 송파</a></li>
+                                                                <li><a href="#">서초, 강남</a></li>
+                                                                <li><a href="#">동작, 관악, 금천</a></li>
+                                                                <li><a href="#">강서, 양천, 영등포, 구로</a></li>
+                                                                <li><a href="#">은평, 마포, 서대문</a></li>
+                                                                <li><a href="#">종로, 중구, 용산</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </article>
+                                                    <article class="grid_8 omega">
+                                                        
+                                                        
+                                                        <div class="indent-right">
+                                                            <h3 class="p2">Tourist Information</h3>
+                                                            <div class="wrapper prev-indent-bot2">
+                                                                <figure class="img-indent1 frame1"><img src="images/seoul.jpg" alt="" /></figure>
+                                                                <div class="extra-wrap"><br>
+                                                                    <h6 class="prev-indent-bot">한반도 중앙부에 있는 대한민국의 수도. </h6>
+                                                                    대한민국의 수도인 서울을 지방자치단체인 특별시로 부르는 명칭이다. 한반도 중앙에 있으며, 한강을 사이에 두고 남북으로 펼쳐져 있다. 북쪽 끝은 도봉구 도봉동, 동쪽 끝은 강동구 상일동, 남쪽 끝은 서초구 원지동, 서쪽 끝은 강서구 오곡동이다. 시청은 중구 을지로1가(태평로1가 31)에 있다.
+
+                                                                </div>
+                                                            </div>
+                                                            <p>한반도의 0.28%(남한 면적의 0.61%)에 해당하는 넓이로, 남북간 연장거리 30.30km, 동서간 연장거리 36.78km이다. 1394년(태조 3)부터 한국의 수도가 되어 정치·경제·산업·사회·문화·교통의 중심지가 되어 왔다. 1960년대 이후 경제발전과 함께 도시화가 진행되면서 통근 및 거주지역이 반경 30km 내의 주변 수도권에 광역적으로 확장되고 있어, 거대도시(Megalopolis)가 되고 있다. 서울 정도(定都) 600년인 1994년에 10월 28일이 서울시민의 날로 제정되어 이후 각종 행사가 열리고 있다. 1988년 국제올림픽이 열렸고, 2010년 G20, 2012년 핵안보정상회의가 열렸다.
+자매도시는 타이베이[臺北京:1993.10.23]·울란바토르(1995.10.6)·하노이(1996.5.1)·바르샤바(1996.6.20)·카이로(1997.4.27)·로마(2000.3.18) 등 17개국의 18개 도시이다.
+
+서울특별시를 상징하는 꽃은 개나리, 나무는 은행나무, 새는 까치이며, 캐릭터는 해치라는 전설에 나오는 동물이다.</p>
+                                                            <a class="button" href="#">Read More</a>
+                                                            <input id="write" type="button" value="글쓰기" style="width:80px;height:30px" />	
+                                                        </div>
+                                                        
+                                                        
+                                                    </article>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container_12">
+                            	<div class="wrapper">
+                                	<article class="grid_4">
+                                    	<h3 class="color-1 p2">Seoul Foundation</h3>
+                                        <span class="text-1">It was established on March 15, 2005 by Seoul Metropolitan Goverment to raise the quality of life through culture and arts and to enhance Seoul's urban competitiveness. <br></span>
+                                    </article>
+                                    <article class="grid_4">
+                                    	<h3 class="color-1 p2">Culture</h3>
+                                        <span class="text-1">Major projects include the creation of cultural arts creation environment, the expansion of cultural services with citizens, the enhancement of Seoul's cultural competitiveness. </span>
+                                    </article>
+                                    <article class="grid_4">
+                                    	<h3 class="color-1 indent-bot">Consultation</h3>
+                                        <form id="subscribe-form" method="post" enctype="multipart/form-data">                    
+                                            <fieldset>
+                                                  <div class="subscribe-field">
+                                                  	<input type="text" />
+                                                  </div>
+                                                  <a class="button" href="#" onClick="document.getElementById('subscribe-form').submit()">Subscribe</a>        
+                                            </fieldset>						
+                                        </form>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>	
+        </div>
+<<<<<<< .mine
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        
+        
+        
+        <div style="padding-top:25px;text-align:center">
+
+			<input id="write" type="button" value="글쓰기" 
+				style="width:300px;height:25px" />
+        
+        
+        
+        
+        
+        
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        
+    
+||||||| .r3
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        
+        
+        
+        <div style="padding-top:25px;text-align:center">
+
+			<input id="write" type="button" value="글쓰기" 
+				style="width:300px;height:25px" />
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        
+    
+=======
+>>>>>>> .r22
+        <div class="bg-bot">
+        	<div class="main">
+            	<div class="container_12">
+                	<div class="wrapper">
+                    	<article class="grid_4">
+                        	<div class="indent-right2">
+                                <h3 class="prev-indent-bot2">Space Planning</h3>
+                                <ul class="list-2">
+                                    <li><a href="#">Totam rem aperiam eaque ipsa quae abillo</a></li>
+                                    <li><a href="#">Inventore veritatis quasi architecto beatae vitae</a></li>
+                                    <li><a href="#">Nemo enim ipsam voluptatem quia</a></li>
+                                    <li><a href="#">Voluptas sit aspernatur aut odit aut fugit</a></li>
+                                    <li class="last-item"><a href="#">Sed quia consequuntur magni dolores eos</a></li>
+                                </ul>
+                            </div>
+                        </article>
+                        <article class="grid_8">
+                        	<h3 class="p2">Selection &amp; Installation</h3>
+                            <div class="wrapper">
+                            	<figure class="img-indent2 frame2"><img src="images/page2-img2.jpg" alt="" /></figure>
+                                <div class="extra-wrap">
+                                	<h6 class="p1">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias.</h6>
+                                    Excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctioam libero tempore cum soluta.
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                
+                
+                
+                
+          	
+                
+                
+                
+                
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                
+                
+                
+                
+            </div>
+        </div>
+    </section>
+    
+	<!--==============================footer=================================-->
+    <footer>
+        <div class="main">
+        	<div class="container_12">
+            	<div class="wrapper">
+                	<div class="grid_4">
+                    	<div>주소 &copy; 2011 <a class="link color-3" href="#">Privacy Policy</a></div>
+                        <div><a rel="nofollow" target="_blank" href="http://www.templatemonster.com/">Website Template</a> by TemplateMonster.com | <a rel="nofollow" target="_blank" href="http://www.html5xcss3.com/">html5xcss3.com</a></div>
+                        <!-- {%FOOTER_LINK} -->
+                    </div>
+                    <div class="grid_4">
+                    	<span class="phone-numb"><span>+82(02)</span> 1544-1774</span>
+                    </div>
+                    <div class="grid_4">
+                    	<ul class="list-services">
+                        	<li><a href="#"></a></li>
+                            <li><a class="item-2" href="#"></a></li>
+                            <li><a class="item-3" href="#"></a></li>
+                            <li><a class="item-4" href="#"></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

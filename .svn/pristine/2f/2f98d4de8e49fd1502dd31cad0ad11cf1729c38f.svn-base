@@ -1,0 +1,88 @@
+package com.seoul.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.seoul.dao.ContactsBoardDao;
+import com.seoul.dto.ContactsAttach;
+import com.seoul.dto.ContactsBoard;
+import com.seoul.dto.ContactsComment;
+
+public class ContactsBoardService {
+
+	public List<ContactsBoard> findBoardList() {
+		ContactsBoardDao boardDao = new ContactsBoardDao();
+		List<ContactsBoard> boards = boardDao.selectBoard();
+		return boards;
+	}
+
+	public ContactsBoard findBoardByBoardNo(int boardNo) {
+		ContactsBoardDao boardDao = new ContactsBoardDao();
+		ContactsBoard board = boardDao.selectBoardByBoardNo(boardNo);
+		ArrayList<ContactsAttach> attachments = 
+		boardDao.selectBoardAttachByBoardNo(boardNo);
+		board.setAttachments(attachments);
+		ArrayList<ContactsComment> comments = 
+				boardDao.selectCommentByBoardNo(boardNo);
+		board.setComments(comments);
+		return board;
+	}
+	
+	public List<ContactsBoard> findBoardList(int first, int last) {
+		ContactsBoardDao dao = new ContactsBoardDao();
+		List<ContactsBoard> boards = dao.selectBoardList2(first, last);
+		return boards;
+	}
+	
+	public int getBoardCount() {
+		ContactsBoardDao dao = new ContactsBoardDao();
+		int count = dao.getBoardCount();
+		return count;
+	}
+	
+	public void increaseReadCount(int boardNo) {
+		ContactsBoardDao boardDao = new ContactsBoardDao();
+		boardDao.updateReadCount(boardNo);		
+	}
+	
+	public void updateBoard(ContactsBoard board) {
+		ContactsBoardDao boardDao = new ContactsBoardDao();
+		boardDao.updateBoard(board);
+		
+	}
+	
+	public void writeBoard1(ContactsBoard board) {
+		ContactsBoardDao dao = new ContactsBoardDao();
+		dao.insertBoard1(board);
+	}
+
+	public void writeBoard2(ContactsBoard board) {
+		ContactsBoardDao dao = new ContactsBoardDao();
+		dao.insertBoard2(board);
+		
+	}
+	
+	public void writeBoard3(ContactsBoard board) {
+		ContactsBoardDao dao = new ContactsBoardDao();
+		dao.insertBoard3(board);
+		
+	}
+	
+	public void writeBoard4(ContactsBoard board) {
+		ContactsBoardDao dao = new ContactsBoardDao();
+		dao.insertBoard4(board);
+		
+	}
+	
+	public void deleteBoard(int boardNo) {
+		ContactsBoardDao boardDao = new ContactsBoardDao();
+		boardDao.deleteBoard(boardNo);		
+	}
+	
+	public void writeComment(ContactsComment comment) {
+		ContactsBoardDao dao = new ContactsBoardDao();
+		dao.insertComment(comment);
+	}
+	
+
+}

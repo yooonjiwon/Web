@@ -1,0 +1,156 @@
+
+package com.seoul.guideservlet;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
+import com.seoul.common.Util;
+import com.seoul.dto.GuideBoardAttach;
+import com.seoul.service.GuideBoardService;
+
+
+@WebServlet(value ="/fileupload.action") 
+public class GuideFileUploadServlet extends HttpServlet {
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/seoulmate/fileupload.jsp");
+		dispatcher.forward(req, resp);
+		
+		
+		
+
+		
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		
+		/* fileupload.jsp 복사붙여넣기 */
+		//파일 업로드 구현
+/**/	req.setCharacterEncoding("utf-8");
+
+		//파일 업로드를 포함한 요청인지 확인(multipart/form-data형식인지 확인)
+/**/	if (ServletFileUpload.isMultipartContent(req) == false) {
+			resp.sendRedirect("list.action");
+			return;
+		}
+
+		//경로 문자열을 저장할 변수
+		//application.getRealPath('웹경로') 
+		//http://... ('가상경로')를 ->  C://.../.... ('물리경로')로 변환
+/**/	ServletContext application = req.getServletContext();
+		String path = application.getRealPath("/WEB-INF/files"); //path 는 파일을 업로드하면 실제로 최종파일이 저장될 경로
+		String tempPath = application.getRealPath("/WEB-INF/temp"); //임시파일을 저장할 경로(업로드가 완료되기전까지)
+
+		//전송 데이터를 각 요소별로 분리해서 개별 객체로 만들기 
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		factory.setSizeThreshold(1024 * 1024 * 2); //setSizeThreshold : 임시파일을 만드는 사이즈의 경계선,바이트단위로 지정
+		factory.setRepository(new File(tempPath)); //setRepository : 임시파일을 저장할 경로를 지정
+
+		//요청 정보를 읽을 파서(Parser) 생성(요청을 읽고 요소별로 분리)
+		ServletFileUpload uploader = new ServletFileUpload(factory);
+		uploader.setFileSizeMax(1024 * 1024 * 10); //수신할 수 있는 최대 파일 사이즈
+
+		
+				
+				//사용자의 요청 데이터를 Board 객체에 저장
+				GuideFileUploadServlet guide = new GuideFileUploadServlet(); // 관계 1:
+				//regdate, active, usertype은 default는 기본값을 지정해두었기 떄문에 굳이 명시하지 않아도 된다.
+		
+				ArrayList<GuideBoardAttach> guideAttachments = new ArrayList<>(); //관계 :Many
+				
+		
+		
+/**/	try {
+		//요청 정보를 파싱하고 개별 객체를 만든다음 목록을 반환
+		List<FileItem> items = uploader.parseRequest(req); /*FileItem안에 있는 각각의 데이터들을 분석해서 items에 저장*/
+		
+
+		for(FileItem item : items) {
+			if (item.isFormField()== false) { //form-data인 경우(file이 아닌경우)
+				
+				/* 아래 if문 설명추가
+				 * 
+				 * 두개의 데이터를 운영해야 하는데 req.getParameter로 읽으면 안되고 라이브러리를 이용해서 분리.
+				 * items에 분리된 데이터들이 들어온다. 그 후에 if문을 통해 req.getParameter가 하는 기능을 하게한다.
+				 * 
+				 * */
+				
+/*if문추가*/		String fileName = item.getName(); /* 업로드된 파일 이름*/
+				if (fileName != null && fileName.length() > 0 ) { //내용이 있는 경우
+					if (fileName.contains("\\")) {
+						//↓ C:\AAA\BBB\CCC.png -> CCC.png 로 바꾸라는 의미 
+						fileName = fileName.substring(fileName.lastIndexOf("\\") +1); //익스플로러에서의 문제점을 해결하는 문장
+					}
+					
+					/*DB에 저장되기 위해서는 고유한 파일명으로 저장되어야 한다.*/
+					String uniqueFileName = Util.makeUniqueFileName(fileName);
+					item.write(new File(path, uniqueFileName)); //파일을 저장
+					item.delete(); //임시파일삭제
+					
+					/* 파일이 하나 만들어질때마다 attach 생성 */
+					GuideBoardAttach guideAttachment = new GuideBoardAttach();
+					guideAttachment.setSub_UserFile(fileName);
+					guideAttachment.setSub_SavedFile(uniqueFileName);
+					guideAttachments.add(guideAttachment);
+					
+				}
+			}
+		}
+		
+/**/	} catch (Exception ex) { 
+		}
+		
+ 		
+		/* 게시글 등록 처리 */
+		//member 데이터와함께 registerMember라는 호출기호같은걸 보낸다
+		//사용자 등록 처리
+		GuideBoardService guideBoardService = new GuideBoardService();
+		
+		/*int newBoardNo = guideBoardService.writeBoard(guide); */
+		
+		/* many 저장 */
+		for (GuideBoardAttach guideAttachment : guideAttachments) {
+			guideBoardService.saveBoardAttach(guideAttachment); //저장 의미
+		}
+		
+		
+		//회원가입을 완료한 후에 브라우저 화면을 home으로 이동
+		//home.html 파일을 복사해서 views안에 붙여넣은후에 home.jsp로 이름 변경함(아래경로에 맞게끔)
+		//jsp선언명령(jsp파일 맨위에 @ 로 시작하는 구문)을 home.jsp에 넣어 jsp파일 형식을 갖게해준다.
+		
+		//↓ forward 방식이기 때문에 브라우저상의 경로에 일관된 경로가 나타나지 않는다
+		//RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/home.jsp");
+		//dispatcher.forward(req, resp);
+		
+		//↓forward방식을 redirect방식으로 변경해서 다시 설정(하지만WEB-INF 경로에는 브라우저가 직접 참여하지 못하기때문에 404오류)
+		//resp.sendRedirect("/demoweb/WEB-INF/views/home.jsp");
+		
+		//요청에 대한 서블릿을 브라우저가 접근 가능한 경로를 설정해주고 따로 생성해줘야 한다.
+		// ★모든 요청은 서블릿으로가야하고 jsp는 그 서블릿의 구성물 역할을 한다고 생각하면 된다.★
+		resp.sendRedirect("/seoul/list.action");
+		
+	}
+	
+	
+}

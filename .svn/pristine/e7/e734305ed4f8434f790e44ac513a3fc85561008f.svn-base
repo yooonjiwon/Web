@@ -1,0 +1,49 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/seoul/css/reset.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="/seoul/css/style.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="/seoul/css/grid.css" type="text/css" media="screen"> 
+    <link rel="stylesheet" href="/seoul/css/style4.css" type="text/css" media="screen">
+    <script src="js/jquery-1.6.2.min.js" type="text/javascript"></script>
+    <script src="js/jquery.galleriffic.js" type="text/javascript"></script>
+    <script src="js/jquery.opacityrollover.js" type="text/javascript"></script>      
+
+</head>
+
+<body id="page1">
+	<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropbtn')) {
+    var myDropdown = document.getElementById("myDropdown");
+      if (myDropdown.classList.contains('show')) {
+        myDropdown.classList.remove('show');
+      }
+  }
+}
+</script>
+
+ <jsp:include page="/WEB-INF/views/include/header2.jsp" />
+ 
+ <form action="mypage.action" method="post">
+		
+	
+	
+	
+	
+
+</form>
+</body>
+</html>

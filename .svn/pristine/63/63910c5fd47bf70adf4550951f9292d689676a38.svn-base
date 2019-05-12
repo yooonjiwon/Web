@@ -1,0 +1,312 @@
+
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8" %>
+
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+	<meta charset="utf-8" />
+	<title>글쓰기</title>
+	    <link rel="stylesheet" href="css/reset.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="css/grid.css" type="text/css" media="screen">   
+    <script src="js/jquery-1.6.2.min.js" type="text/javascript"></script> 
+    <script src="js/jquery.easing.1.3.js" type="text/javascript"></script>
+    <script src="js/jcarousellite_1.0.1.js" type="text/javascript"></script>
+    <script src="js/jquery.galleriffic.js" type="text/javascript"></script>
+    <script src="js/jquery.opacityrollover.js" type="text/javascript"></script> 
+    	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$('a#delete').on('click', function(event) {
+				var boardNo = $(this).attr('data-boardno');
+				var ok = confirm(boardNo + '번 글을 삭제할까요?');
+				if (ok) {
+					location.href = "delete.action?boardno=" + boardNo; 
+				}
+				event.preventDefault();
+			});
+		});	
+			
+			
+		
+
+	
+	</script>
+	
+	
+	<!-- 댓글 달기 기능 구현을 위한 자바스크립트 -->
+		<script type="text/javascript">
+	$(function() {
+		
+		function toggleCommentStatus(commentNo, edit) {		
+			$('#commentview' + commentNo).css('display', edit ? 'none' : 'block'); //edit이 true이면 none, false이면 block
+			$('#commentedit' + commentNo).css('display', edit ? 'block' : 'none'); //하나가 보이면 하나가 안보이는 기능
+		}
+		
+		//댓글등록 이벤트 처리
+		$('#writecomment').on('click', function(event) {
+			//댓글 내용이 없을때 경고창 뜨는 브라우저 단계에서의 검사
+			var content = $('textarea#comment_content').val();
+			if (content.length == 0) { //댓글이 없다면 alert창 띄움
+				alert('댓글 내용을 입력하세요.');
+				$('#comment_content').focus();
+			} else { //댓글길이가 0이 아니라면, 즉 댓글 내용이 있다면 submit작업
+				$('#commentform').submit();
+			}
+			event.preventDefault();
+		});
+		
+		$('a[id=edit]').on('click', function(event) {
+			var commentNo = $(this).attr('data-commentno'); //data- : 사용자 정의 속성
+			toggleCommentStatus(commentNo, true); //바로 위쪽의 toggleCommentStatus 함수 호출
+			event.preventDefault();
+		});
+		
+		$('a[id=deletecomment]').on('click', function(event) { //밑에 deletecomment에 있는 세가지 속성을 가져옴
+			var commentNo = $(this).attr('data-commentno'); //삭제요청이 이뤄지면 delete서블릿이 필요하다
+			var boardNo = $(this).attr('data-boardno');
+			var pageNo = $(this).attr('data-pageno');
+			var yes = confirm(commentNo + "번 답글을 삭제할까요?");
+			if (yes) {
+				location.href =
+					'deletecomment.action?commentno=' + commentNo + 
+							'&boardno=' + boardNo + '&pageno=' + pageNo;
+			}
+			event.preventDefault();
+		});
+		$('a[id=modify]').on('click', function(event) {
+			var commentNo = $(this).attr('data-commentno');
+			$('#commenteditform' + commentNo).submit();
+			event.preventDefault();
+		});
+		
+		$('a[id=cancel]').on('click', function(event) {
+			var commentNo = $(this).attr('data-commentno');
+			toggleCommentStatus(commentNo, false);
+			event.preventDefault();
+		});
+	});
+	
+	</script>
+	
+	
+</head>
+<body>
+
+	<div id="pageContainer">
+	
+		<jsp:include page="/WEB-INF/views/include/header.jsp" />
+		
+		<div style="padding-top:25px;text-align:center">
+		<div id="inputcontent">
+		    <div id="inputmain">
+		        <div class="inputsubtitle">게시판 글 내용</div>
+		         <%-- <% Board board = (Board)request.getAttribute("board"); %> --%>
+		       
+		        <table>
+		            <tr>
+		                <th>제목</th>
+		                <%-- <td><%= board.getTitle() %></td> --%>
+		                <td>${ requestScope.j_guideboard.gub_title }</td> <!-- requestScope는 안써도 잘찾음 -->
+		            </tr>
+		            <tr>
+		                <th>작성자</th>
+		               <%--  <td><%= board.getWriter() %></td> --%>
+		               <td>${ j_guideboard.gub_writer }</td>
+		            </tr>
+		            <tr>
+		                <th>작성일</th>
+		                <%-- <td><%= board.getRegDate() %></td> --%>
+		                <td>${ j_guideboard.gub_regDate }</td>
+		            </tr>
+					<tr>
+		                <th>조회수</th>
+		               <%--  <td><%= board.getReadCount() %></td> --%>
+		               <td>${ j_guideboard.gub_readCount }</td>
+		            </tr>
+		            <tr>
+		                <th>첨부파일</th>
+		                <td>
+		                
+		                </td>
+		            </tr>
+		            
+		            <tr>
+		                <th>내용</th>
+		                <td style="height:200px;vertical-align:top">		
+		                	<!-- replace를 이용해서 엔터기능 할 수 있도록 수정 -->   
+		                	<!-- c:set은 변수를 만드는기능, 여기선 역슬래쉬를 인식하지 못하기때문에 실제 엔터로 적용함 -->                 
+		                    <%-- <%= board.getContent().replace("\r\n", "<br>") %> 원래 있던 구문 --%> 
+		                    <c:set var="newLine" value="
+" />
+		                    ${ fn:replace(board.content, newLine, "<br>" )}
+		                </td>
+		            </tr>
+		        </table>
+		        
+		        
+		        
+		        
+		        
+		        
+		        
+		        <%--  원래 실행문 ↓
+		        
+		        <div class="buttons">
+		         <% Member member = (Member)session.getAttribute("loginuser"); %>
+		         
+		        <!-- 아래 if문을 대신하는 JSTL -->
+		        <c:if test="${ board.writer eq loginuser.memberId }" >
+		        	[&nbsp;<a id="delete" href='#' data-boardno="${ board.boardNo }">삭제</a>&nbsp;]
+		         	[&nbsp;<a href='update.action?boardno=${ board.boardNo }&pageno=${pageno}'>수정</a>&nbsp;]
+		        </c:if>
+		         	[&nbsp;<a href='reply.action?boardno=${ board.boardNo }'>댓글쓰기</a>&nbsp;]
+		        	[&nbsp;<a href='list.action?pageno=${ pageno }'>목록보기</a>&nbsp;] 
+		        	
+		        	
+		        	
+		        	
+		        	
+		        	
+		        	
+		        	
+		       <%-- 
+		       		아래 문장을 JSTL을 이용해서 위처럼 수정
+		       		<% if (member.getMemberId().equals(board.getWriter())) { %> <!-- 로그인한 사용자와 작성한 사용자가 같다면 -->
+		        	[&nbsp;<a id="delete" href='#' data-boardno="<%= board.getBoardNo() %>">삭제</a>&nbsp;]
+		         	[&nbsp;<a href='update.action?boardno=<%= board.getBoardNo() %>&pageno=<%= request.getAttribute("pageno") %>'>수정</a>&nbsp;]
+		         	<% } %>
+		         	[&nbsp;<a href='reply.action?boardno=<%= board.getBoardNo() %>'>댓글쓰기</a>&nbsp;]
+		        	[&nbsp;<a href='list.action?pageno=<%= request.getAttribute("pageno") %>'>목록보기</a>&nbsp;] 
+		        	<% } %>		
+		        				--%>
+		        	
+		        	
+		        </div>
+		    </div>
+		</div>
+		
+		
+        
+        <br /><br /><br /><br /><br /><br />
+	
+	</div>
+	</div>
+	
+			<!-- comment 쓰기 영역 -->
+			<!-- detail화면에서 댓글다는 영역을 만드는 코드 -->
+			<!-- hidden방식으로 boardno, pageno넘어가고 content정보가 서블릿으로 넘어간다-->
+		<br /><br />
+		
+<%-- 		<% if (session.getAttribute("loginuser") != null) { %>
+		<!-- 위구문을 JSTL로 변경 -->
+		<c:if test="${ loginuser ne null }">
+		<form id="commentform" 
+			action="writecomment.action" method="post">
+			<input type="hidden" name="boardno" value="${ board.boardNo }" />
+			<input type="hidden" name="pageno" value='${ pageno }' />
+			<table style="width:600px;border:solid 1px;margin:0 auto">
+	            <tr>
+	                <td style="width:550px">	                	
+	                    <textarea id="comment_content" name="content" 
+	                    	style="width:550px" rows="3"></textarea>	                    
+	                </td>
+	                <td style="width:50px;vertical-align:middle">
+	                	<a id="writecomment" href="#" style="text-decoration:none">
+	                		댓글<br />등록
+	                	</a>
+	                </td>
+	            </tr>                    
+	        </table>
+        </form>
+        </c:if>
+        
+        <hr align="center" style="width:600px;" /> --%>
+        
+        
+        <!-- ---------------------------------------------------------------------------------- -->
+
+
+		<!-- comment 표시영역 -->
+
+<%-- 		    <% if (board.getComments().size() == 0) { %> <!-- 댓글이 없다면 -->
+		    <c:choose>
+		    	<c:when test="${ empty board.comments }">
+					<h3 id="nodata" style="text-align:center">
+					 작성된 댓글이 없습니다. 
+					</h3>
+				</c:when>
+			
+			<% } else { %> <!-- 댓글이 있으면 -->
+			otherwise로 대체
+			<c:otherwise>
+		   		<table style="width:600px;border:solid 1px;margin:0 auto">
+				<% for (BoardComment bcomment : board.getComments()) { %> <!-- 데이터가 입력될때마다 tr하나씩-->
+				위의 for문을 아래처럼
+				<c:forEach var="bcomment" items="${ board.comments }">
+				
+					<tr>
+					<td style="text-align:left;margin:5px;border-bottom: solid 1px">
+	        		<div id='commentview${ bcomment.commentNo }'> <!-- 편집을 눌렀을떄 -->
+	                    ${ bcomment.writer } &nbsp;&nbsp;
+	                    [ ${ bcomment.regDate } ]
+	                    <br /><br />
+	                    <span>
+	                    	${ fn:replace(bcomment.content, newLine, "<br>") }
+							<%= bcomment.getContent().replace("\r\n", "<br>") %>
+	                    </span>
+	                    <br /><br />
+	                    <!-- ↓작성자가 사용자가 맞으면 -->
+	                    <div style='display: <%= member.getMemberId().equals(bcomment.getWriter()) ? "block" : "none" %>'>
+	                    <div style='display: ${ loginuser.memberId eq bcomment.writer ? "block" : "none" }'>
+	                    	<a id="edit" data-commentno='${ bcomment.commentNo }' href="#">편집</a>
+	                    	&nbsp;
+	                    	<a id="deletecomment" href="#" 	data-commentno='${ bcomment.commentNo }'
+															data-boardno='${ board.boardNo }'
+															data-pageno='${ pageno }'>삭제</a>
+												
+	                    </div>
+	                   
+	                </div> --%>
+	                
+<%-- 	                <div id='commentedit${ bcomment.commentNo }' style="display: none"> <!-- 삭제를 눌렀을때 -->
+						${ bcomment.writer }&nbsp;&nbsp; 
+						[${ bcomment.regDate }] 
+						<br /><br />
+						<form id="commenteditform${ bcomment.commentNo }" action="updatecomment.action" method="post">
+						<input type="hidden" name="boardno" value="${ board.boardNo }" />
+						<input type="hidden" name="pageno" value='${ pageno }' />
+						<input type="hidden" name="commentno" value="${ bcomment.commentNo }" />
+						<textarea name="content" style="width: 600px" rows="3" maxlength="200">${ bcomment.content }</textarea>
+						</form>
+						<br />
+						<div>
+							<!-- bcomment.getCommentNo 를 이용해서 커맨트 넘버를 같이 저장하면서 돌수있게 만듬 -->
+							<a id="modify" data-commentno='${ bcomment.commentNo }' href="#">수정</a> 
+							&nbsp; 
+							<a id="cancel" data-commentno='${ bcomment.commentNo }' href="#">취소</a>
+						</div>
+					</div>
+		
+					</td>
+	        	</tr>
+			<% } %>
+			</c:forEach> 
+	        </table>
+	     
+		</c:otherwise>
+		</c:choose> --%>
+		<!-- comment 표시 영역 -->
+
+
+<br><br><br><br><br><br><br><br><br>
+
+</body>
+</html>

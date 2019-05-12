@@ -1,0 +1,101 @@
+﻿<%@page import="com.seoul.dao.MemberDao"%>
+<%@page import="com.seoul.dto.Member"%>
+<%@page import="com.seoul.dto.Information"%>
+<%@page import="java.util.List"%>
+<%@ page language="java"
+			   contentType="text/html; charset=utf-8"
+    		   pageEncoding="utf-8"%>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>게시물 목록</title>
+	<link rel="Stylesheet" href="/seoul/css/default.css" />
+	<link rel="Stylesheet" href="/seoul/css/tabledesign.css" />
+	<script src= "http://code.jquery.com/jquery-3.2.1.js"></script>
+  	<script type="text/javascript">
+  	  	
+  	$(function() { //jQuery's main function
+  		$('#write').on('click', function(event) {
+  			location.href = '/seoul/information/write3.action';
+  		});
+  	});
+  	
+	$(document).ready(function() { 
+		$(".jCarouselLite").jCarouselLite({
+			  btnNext: ".next",
+			  btnPrev: ".prev",
+			  speed: 400,
+			  vertical: false,
+			  circular: true,
+			  easing:'easeOutQuart',
+			  visible: 4,
+			  start: 0,
+			  scroll: 1
+		 });
+	});
+	</script>
+</head>
+<body>
+
+<jsp:include page="/WEB-INF/views/include/header.jsp" />
+
+	<div id="pageContainer">
+		<div style="padding-top:25px;text-align:center">
+					
+			<input id="write" type="button" value="글쮸긔" 
+				style="width:100px;height:25px" />
+
+			<br /><br />
+
+<!-- -------------------------------------------------------------------------- -->
+<% List<Information> informations = (List<Information>)request.getAttribute("boards"); %>
+<table class="type07" style="margin:0 auto;">
+    <thead align="center">
+    <tr>
+        <th scope="cols">AREA</th>
+        <th scope="cols">TITLE</th>
+        <th scope="cols">ID</th>
+        <!-- <th scope="cols">ADDRESS</th>
+        <th scope="cols">TELEPHONE</th>
+        <th scope="cols">REGDATE</th> -->
+        <th scope="cols">VIEWS</th>
+    </tr>
+    </thead>
+    <tbody>
+	    <% for (Information information : informations) { %>   <!-- 빠른포문 -->
+	    <tr>
+	        <th scope="row" align="center"><%= information.getIn_Area() %></th>
+		        <td style='text-align:center'>					
+				
+<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ삭제 글일경우ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->				
+				<% if (information.isDeleted()) { //삭제된 글인 경우%>
+						<span id="deleted-message">[ 삭제된 글 ]</span>
+					<% } else { //삭제되지 않은 글 %>
+						<a href="detail3.action?boardno=<%= information.getIn_No() %>&pageno=<%= request.getAttribute("pageno") %>" style='text-decoration: none'>
+							<%= information.getIn_Title() %>
+						</a>
+					<% } %>
+					</td>
+<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+				<td style='text-align:center'><%= information.getM_MemberId() %></td>
+				<%-- <td class="td2" style='text-align:center'><%= information.getIn_Address() %></td>
+				<td style='text-align:center'><%= information.getIn_Telephone() %></td>
+				<td style='text-align:center'><%= information.getRegDate() %></td> --%>
+				<td class="td3" style='text-align:center'><%= information.getReadCount() %></td>						
+
+		<% } %>
+    	</tr>    
+    </tbody>
+</table>
+<!-- -------------------------------------------------------------------------- -->
+			<br><br>
+			<%= request.getAttribute("pager").toString() %>		
+		</div>
+		<br><br><br><br><br><br>	
+	</div>	
+	
+</body>
+</html>

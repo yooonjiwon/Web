@@ -1,0 +1,57 @@
+package com.seoul.memberservlet;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.seoul.dto.Member;
+
+/******************프로필을 수정하는 서블릿*********************/
+
+@WebServlet(value = "/account/memberupdate.action")
+public class MemberUpdateServlet extends HttpServlet {
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
+
+		// 요청한 데이터 읽기 
+		String smemberId = req.getParameter("memberId");
+		String name = req.getParameter("name");
+		String email = req.getParameter("email"); // 방법2 브라우저에서 가져오는 법 - 코드 분산
+		String birthday = req.getParameter("birthday");
+		String country_code = req.getParameter("country_code");
+		String phone = req.getParameter("phone");
+		String gender = req.getParameter("gender");
+		String nation = req.getParameter("nation");
+		String interest = req.getParameter("interest");
+
+		// memberid로 데이터 수정 (MemberService 이용)
+
+		Member member = new Member();
+		member.setMemberId(smemberId);
+		member.setName(name);
+		member.setEmail(email);
+		member.setBirthday(birthday);
+		member.setCountry_code(country_code);
+		member.setPhone(phone);
+		member.setGender(gender);
+		member.setNation(nation);
+		member.setInterest(interest);
+
+	}
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		
+		// mypage으로 이동
+		RequestDispatcher dispatcher = 
+				req.getRequestDispatcher("/WEB-INF/views/account/mypage.jsp");
+			dispatcher.forward(req, resp);
+	}
+}
