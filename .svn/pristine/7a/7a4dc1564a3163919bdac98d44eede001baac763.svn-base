@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.dieat.mapper.CalorieMapper">
+
+	<select id="selectBoardList2"
+		resultType="com.dieat.dto.Calorie"
+		parameterType="hashmap">
+		SELECT *
+		FROM		
+		(
+			SELECT
+				rownum idx, s.* 
+			FROM		
+			(
+				SELECT
+					boardno, title, writer,
+					regdate, readcount,
+					deleted, groupno, step, depth
+				FROM
+					board
+				WHERE
+						deleted = '0'
+				ORDER BY groupno DESC, step ASC
+			) s		
+		)
+		WHERE idx >= #{first} AND idx <![CDATA[<]]> #{last}	
+	</select>
+
+	<select id="selectBoardCount" resultType="int">
+		SELECT count(*) FROM board
+	</select>
+	
+	<insert id="insertBoard" parameterType="com.demoweb.dto.Board"
+		useGeneratedKeys="true" 
+		keyProperty="boardNo" keyColumn="boardno">
+		INSERT INTO board 
+		(boardno, title, writer, content, groupno, step)
+		VALUES 
+		(
+			board_sequence.nextval, 
+			#{title}, #{writer}, #{content}, 
+			board_sequence.currval, 1
+		)
+	</insert>
+	
+	<insert id="insertBoard2" parameterType="com.demoweb.dto.Board">
+		<selectKey keyProperty="boardNo" order="AFTER">
+			SELECT board_sequence.currval FROM DUAL
+		</selectKey>
+		INSERT INTO board 
+		(boardno, title, writer, content, groupno, step)
+		VALUES 
+		(
+			board_sequence.nextval, 
+			#{title}, #{writer}, #{content}, 
+			board_sequence.currval, 1
+		)
+	</insert>
+	
+	<insert id="insertBoardAttach" 
+		parameterType="com.demoweb.dto.BoardAttach">
+		INSERT INTO boardattach
+		(attachno, boardno, savedfilename, userfilename)
+		VALUES 
+		(
+			boardattach_sequence.nextval, 
+			#{boardNo}, #{savedFileName}, #{userFileName}
+		)	
+	</insert>
+	
+	<resultMap type="com.demoweb.dto.Board" id="boardMap">
+		<id column="boardno" property="boardNo" />
+		<result column="title" property="title" />
+		<result column="writer" property="writer" />
+		<result column="regdate" property="regDate" />
+		<result column="readcount" property="readCount" />
+		<result column="groupno" property="groupNo" />
+		<result column="step" property="step" />
+		<result column="depth" property="depth" />
+		<result column="content" property="content" />
+		<collection property="attachments" 
+			column="boardno" resultMap="boardAttachMap" />
+	</resultMap>
+	<resultMap type="com.demoweb.dto.BoardAttach" id="boardAttachMap">
+		<id column="attachno" property="attachNo" />
+		<result column="savedfilename" property="savedFileName" />
+		<result column="userfilename" property="userFileName" />
+	</resultMap>
+	
+	<select id="selectBoardByBoardNo2" 
+		parameterType="int" resultMap="boardMap">
+		SELECT 
+			b.boardno, b.title, b.writer, b.regdate, b.readcount, 
+			b.groupno, b.step, b.depth, b.content,
+			ba.attachno, ba.savedfilename, ba.userfilename
+		FROM 
+			board b
+		LEFT OUTER JOIN 
+			boardattach ba
+		ON
+			b.boardno = ba.boardno
+		WHERE 
+			b.boardno = #{id}
+	</select>
+	
+	<resultMap type="com.demoweb.dto.Board" id="boardMap2">
+		<id column="boardno" property="boardNo" />
+		<result column="title" property="title" />
+		<result column="writer" property="writer" />
+		<result column="regdate" property="regDate" />
+		<result column="readcount" property="readCount" />
+		<result column="groupno" property="groupNo" />
+		<result column="step" property="step" />
+		<result column="depth" property="depth" />
+		<result column="content" property="content" />
+		<collection property="attachments" 
+			column="boardno" select="selectBoardAttachByBoardNo" />
+	</resultMap>
+	<select id="selectBoardByBoardNo3" 
+		parameterType="int" resultMap="boardMap2">
+		SELECT 
+			b.boardno, b.title, b.writer, b.regdate, b.readcount, 
+			b.groupno, b.step, b.depth, b.content
+		FROM 
+			board b
+		WHERE 
+			b.boardno = #{id}
+	</select>	
+	<select id="selectBoardAttachByBoardNo" 
+		parameterType="int" 
+		resultType="com.demoweb.dto.BoardAttach">
+		SELECT
+			attachno, boardno, savedfilename, userfilename
+		FROM 
+			boardattach
+		WHERE 
+			boardno = #{id}
+	</select>
+	
+	<!-- .......................................... -->
+	
+	<select id="selectBoardList2" resultType="com.demoweb.dto.Board">
+		SELECT boardno, title, writer, regdate, readcount, deleted, groupno, step, depth 
+		FROM board
+		ORDER BY groupno DESC, step ASC 
+	</select>
+	
+	<select id="selectBoardByBoardNo" parameterType="int" resultType="com.demoweb.dto.Board">
+		SELECT boardno, title, writer, regdate, readcount, groupno, step, depth, content 
+		FROM board
+		WHERE boardno = #{id}
+	</select>
+	
+	<update id="updateBoard" parameterType="com.demoweb.dto.Board">
+		UPDATE board
+		SET title = #{title}, content = #{content}
+		WHERE boardno = #{boardNo}
+	</update>
+	
+	<update id="deleteBoard" parameterType="int">
+		UPDATE board
+		SET deleted = '1'
+		WHERE boardno = #{no}
+	</update>
+	
+	<update id="updateReadCount" parameterType="int">
+		UPDATE board
+		SET readcount = readcount + 1
+		WHERE boardno = #{no}
+	</update>
+	
+	<insert id="insertReply" parameterType="com.demoweb.dto.Board"
+		useGeneratedKeys="true" 
+		keyColumn="boardno" keyProperty="boardNo">
+		INSERT INTO board (boardno, title, writer, content, groupno, step, depth)
+		VALUES (board_sequence.nextval, #{title}, #{writer}, #{content}, #{groupno}, #{step}, #{depth})
+	</insert>
+	
+	<update id="updateStep" parameterType="hashmap">
+		UPDATE board
+		SET step = step + 1
+		WHERE groupno = #{groupno} and step > #{step}
+	</update>
+	
+	<select id="selectBoardAttachByAttachNo" parameterType="int"
+		resultType="com.demoweb.dto.BoardAttach">
+		SELECT attachno, boardno, savedfilename, userfilename 
+		FROM boardattach WHERE attachno = #{no}	
+	</select>
+	
+	<insert id="insertComment" parameterType="com.demoweb.dto.BoardComment">
+		INSERT INTO boardcomment
+		(commentno, boardno, writer, content)
+		VALUES 
+		(boardcomment_sequence.nextVal, #{boardNo}, #{writer}, #{content})
+	</insert>
+	
+	<update id="updateComment" parameterType="com.demoweb.dto.BoardComment">
+		UPDATE boardcomment
+		SET content = #{content}
+		WHERE commentno = #{commentNo}
+	</update>
+	
+	<delete id="deleteComment" parameterType="int">
+		DELETE FROM boardcomment				
+		WHERE commentno = #{no}
+	</delete>
+	
+	<select id="selectCommentByBoardNo" parameterType="int"
+		resultType="com.demoweb.dto.BoardComment">
+		SELECT commentno, boardno, writer, content, regdate 
+		FROM boardcomment WHERE boardno = #{no}
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+

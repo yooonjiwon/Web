@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.dieat.mapper.MemberMapper">
+
+<<<<<<< .mine
+<!-- 	<select id="selectMemberByIdAndPasswd" parameterType="hashmap" resultType="com.demoweb.dto.Member">
+||||||| .r63
+	<select id="selectMemberByIdAndPasswd" parameterType="hashmap" resultType="com.demoweb.dto.Member">
+=======
+	<select id="selectMemberByIdAndPasswd" parameterType="hashmap" resultType="com.dieat.dto.Member">
+>>>>>>> .r82
+		SELECT memberid, email, usertype 
+		FROM member 
+		WHERE memberid = #{id} AND passwd = #{passwd}
+	</select>
+	
+	<insert id="insertMember" parameterType="com.dieat.dto.Member">
+		INSERT INTO member (memberid, passwd, email)
+		VALUES (#{memberId}, #{passwd}, #{email})
+	</insert> -->
+
+</mapper>
+
+
+
+
+
+
+
+

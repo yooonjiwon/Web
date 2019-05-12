@@ -1,0 +1,112 @@
+<%@page import="com.dieat.dto.Member"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+    
+<html>
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="/demo/resources/style/login-modal.css">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+/* 	$(function() {
+		$('#loginbtn').on('click', function(event) {
+			window.open("account/login.action", "팝업", "left=10, top=10, width=500, height=500")
+			event.preventDefault();// <a>의 기본 기능 수행 막는 명령
+			}
+		);
+	}); */
+	
+	$(function() {
+		$('#show-modal').on('click', function(event) {
+			$('#login-modal').modal({
+				show : true
+			});
+			event.preventDefault();
+		});
+	});
+	</script>
+
+
+</head>
+<body>
+   <header>    
+   
+   	<div class="modal fade" id="login-modal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true"
+		style="display: none;">
+		<div class="modal-dialog">
+			<div class="loginmodal-container">
+				<h1>Login to Your Account</h1>
+				<br>
+				<form id="login-form">
+					<input type="text" name="user" placeholder="Username"> 
+					<input type="password" name="pass" placeholder="Password"> 
+					<input type="submit" name="login" class="login loginmodal-submit" value="Login">
+					<input type="submit" name="login" class="login loginmodal-submit" value="Login" id="login-button">
+				</form>
+
+				<div class="login-help">
+					<a href="#">Register</a> - <a href="#">Forgot Password</a>
+				</div>
+			</div>
+		</div>
+	</div>
+   
+   
+   
+   
+   
+   
+				<div class="container_12">
+					<div class="grid_12">
+						<div class="socials">
+							<a href="#" class="fa fa-twitter"></a>
+							<a href="#" class="fa fa-facebook"></a>
+							<a href="#" class="fa fa-google-plus"></a>
+							<a href="#" class="fa fa-instagram"></a>
+						</div>
+						
+						<h1>
+							<a href="/dieat/home.action">
+								<img src="/dieat/resources/images/logo.png" alt="Your Happy Family">								
+							</a>
+						</h1>	
+						
+						<div class="menu_block">
+							<nav class="horizontal-nav full-width horizontalNav-notprocessed">
+								<ul class="sf-menu">
+									<li class="current"><a href="home.action">Home</a></li>
+									<li><a href="/dieat/foodinfo/menupage.action">식단</a></li>
+									<li><a href="#">운동방법</a></li>
+									<li><a href="#">스케줄러</a></li>										
+									<li><a href="/dieat/exercise/weight-list.action">칼로리</a></li>
+									<li><a href="/dieat/gym/gym.action">GYM</a></li>
+									<li><a href="/dieat/board/list.action">커뮤니티</a></li>	
+									
+									<c:choose> 
+									<c:when test="${ loginuser eq null }">
+									<!-- <li id="loginbtn" style="padding:0 0 0 50px; font-size:14px"><a href="/dieat/account/login.action">로그인</a></li> -->
+									<li id="show-modal" style="padding:0 0 0 50px; font-size:14px"><a href="#">로그인</a></li>
+									<li style="font-size:14px"><a href="/dieat/account/register.action">회원가입</a></li>
+									</c:when>
+									<c:otherwise>
+									<li id="btn_submit" style="padding:0 0 0 20px; font-size:13px"><a href="/dieat/account/point.action">포인트</a></li>
+									<li class="init" style="font-size:13px"><a href="/dieat/account/mypage.action">${ loginuser.id }</a></li>
+									<li style="font-size:13px"><a href="/dieat/account/logout.action">로그아웃</a></li>
+									</c:otherwise>	
+									</c:choose>			
+								</ul>
+							</nav>
+							<div class="clear"></div>
+							
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+
+			</header>
+			</body>

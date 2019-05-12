@@ -1,0 +1,102 @@
+﻿<%@page import="com.dieat.dto.Calorie"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" 
+		 contentType="text/html; charset=utf-8"
+    	 pageEncoding="utf-8"%>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>게시물 목록</title>
+	<link rel="Stylesheet" href="/dieat/resources/styles/calendar.css" />
+	<link rel="Stylesheet" href="/dieat/resources/styles/camera.css" />
+	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+	<script type="text/javascript">
+	$(function() { //jQuery's main function
+		$('#write').on('click', function(event) {
+			location.href = 'write7.action';
+		});
+		$('#write').on('click', function(event) {
+			location.href = 'write7.action';
+		});
+		$('#write').on('click', function(event) {
+			location.href = 'write7.action';
+		});
+		$('#write').on('click', function(event) {
+			location.href = 'write7.action';
+		});
+	});
+	</script>
+</head>
+<body>
+	
+	   <jsp:include page="/WEB-INF/views/include/header.jsp" flush="true">
+       <jsp:param name="bg-color" value="palegreen" />
+       </jsp:include>
+	   <jsp:include page="/WEB-INF/views/include/footer.jsp" flush="true">
+       <jsp:param name="bg-color" value="palegreen" />
+       </jsp:include>
+		
+	<div id="pageContainer">		
+		<div style="padding-top:25px;text-align:center">
+			<input id="check" type="button" value="체크담기" style="width:150px;height:25px" />
+			<input id="write" type="button" value="글쓰기" style="width:150px;height:25px" />
+			<input id="write" type="button" value="수정" style="width:150px;height:25px" />
+			<input id="delete" type="button" value="삭제" style="width:150px;height:25px" />
+			<br /><br />
+			<% List<Calorie> boards = 
+				(List<Calorie>)request.getAttribute("boards"); %>				
+			<table border="1" align="center">
+				<tr style="background-color:beige;height:25px">
+					<th style="width:30px">번호</th>
+					<th style="width:150px">운동명</th>
+					<th style="width:100px">운동부위</th>
+					<th style="width:80px">칼로리</th>
+					<th style="width:300px">운동설명</th>
+				</tr>
+				<% for (Calorie board : boards) { %>
+				<tr style="height:25px">
+					<td style='text-align:center'><%= board.getNo() %></td>
+					<td style='text-align:left;padding:5px'>
+					<% for (int i = 0; i < board.getDepth(); i++) { %>
+					&nbsp;&nbsp;
+					<% } %>
+					<% if (board.getDepth() > 0) { %>
+					<img src="/dieat/resources/image/re.gif">
+					<% } %>
+					
+					<% if (board.isDeleted()) { //삭제된 글인 경우%>
+						<span id="deleted-message">[ 삭제된 글 ]</span>
+					<% } else { //삭제되지 않은 글 %>
+						<a href='list7.action?boardno=<%= board.getNo() %>&pageno=<%= request.getAttribute("pageno") %>' style='text-decoration: none'>
+							<%= board.getTitle() %>
+						</a>
+					<% } %>
+					</td>					
+					<td style='text-align:center'><%= board.getRegDate() %></td>
+					<td style='text-align:center'><%= board.getReadCount() %></td>
+				</tr>
+				<% } %>
+			</table>
+			<br><br>
+			<%= request.getAttribute("pager").toString() %>
+		</div>
+	</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

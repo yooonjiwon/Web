@@ -1,0 +1,36 @@
+package com.dieat.mapper;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.dieat.dto.Calorie;
+
+public interface CalorieMapper {	            
+	List<Calorie> selectCalorieList(HashMap<String, Object> params);
+	int selectCalorieCount();
+	
+	void insertCalorie(Calorie board);
+	void insertCalorie2(Calorie board);	
+	
+	Calorie selectCalorieByCalorieNo2(int boardNo);
+	Calorie selectCalorieByCalorieNo3(int boardNo);	
+	
+	///////////////////////////////////////////////
+	
+	List<Calorie> selectCalorieList2();
+	Calorie selectCalorieByCalorieNo(int boardNo);
+	void updateCalorie(Calorie board);
+	void deleteCalorie(int boardNo);
+	void updateReadCount(int boardNo);
+	void insertReply(Calorie Calorie);
+	void updateStep(HashMap<String, Object> params);
+	void insertBoard(Calorie board);
+	List<Calorie> selectBoardList2();
+	Calorie selectBoardByBoardNo(int boardNo);
+	Calorie selectBoardByBoardNo3(int boardNo);
+	void updateBoard(Calorie board);
+	void deleteBoard(int boardNo);
+	List<Calorie> selectBoardList(HashMap<String, Object> params);
+	int selectBoardCount();
+	
+}

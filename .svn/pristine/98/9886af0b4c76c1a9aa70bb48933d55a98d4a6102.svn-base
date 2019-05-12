@@ -1,0 +1,90 @@
+package com.dieat.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import com.dieat.dto.Calorie;
+
+//@Service(value = "schedulereService")
+public class CalorieService {
+	
+	@Autowired
+	@Qualifier("schedulereDao")
+	private CalorieDao schedulereDao;
+	
+	public List<Calorie> findBoardList() {
+		List<Calorie> boards = schedulereDao.selectBoard();
+		return boards;
+	}
+
+	public Calorie findBoardByBoardNo(int no) {
+		
+		Calorie schedulere = schedulereDao.selectBoardByBoardNo2(no);
+	}
+	public void updateBoard(Calorie schedulere) {
+		schedulereDao.updateBoard(schedulere);
+	}
+
+	public void deleteBoard(int boardNo) {
+		schedulereDao.deleteBoard(boardNo);		
+	}
+
+	public void increaseReadCount(int boardNo) {
+		schedulereDao.updateReadCount(boardNo);		
+	}
+
+	public void replyBoard(Calorie schedulere) {
+		//�썝 湲��쓽 �젙蹂� 議고쉶
+		Calorie parent = boardDao.selectBoardByBoardNo(schedulere.getNo());
+		
+		//媛숈� 洹몃９�뿉 �룷�븿�맂 湲곗〈 湲��쓽 �닚�꽌踰덊샇(step) 利앷�
+		schedulereDao.updateStep(parent.getGroupNo(), parent.getStep());
+		
+		schedulere.setGroupNo(parent.getGroupNo());
+		schedulere.setStep(parent.getStep() + 1);
+		schedulere.setDepth(parent.getDepth() + 1);
+		schedulereDao.insertReply(schedulere);		
+	}
+
+	public List<Calorie> findBoardList(int first, int last) {
+		List<Calorie> boards = schedulereDao.selectBoardList2(first, last);
+		return boards;
+	}
+
+	public int getBoardCount() {
+		int count = schedulereDao.getBoardCount();
+		return count;
+	}
+
+	public void saveBoardAttach(BoardAttach attachment) {
+		boardDao.insertBoardAttach(attachment);		
+	}
+
+	public BoardAttach findBoardAttachByAttachNo(int attachNo) {
+		BoardAttach attachment = 
+				boardDao.selectBoardAttachByAttachNo(attachNo);
+		return attachment;
+	}
+
+	public void writeComment(BoardComment comment) {
+		boardDao.insertComment(comment);
+	}
+
+	public void deleteComment(int commentNo) {
+		boardDao.deleteComment(commentNo);		
+	}
+
+	public void updateComment(BoardComment comment) {
+		boardDao.updateComment(comment);
+	}
+
+	public List<BoardComment> findBoardCommentByBoardNo(int boardNo) {
+		List<BoardComment> comments = boardDao.selectCommentByBoardNo(boardNo);	
+		return comments;
+	}
+	
+}

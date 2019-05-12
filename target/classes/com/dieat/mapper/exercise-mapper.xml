@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.dieat.mapper.ExerciseMapper">
+	 	 
+	<insert id="writeWeigh" parameterType="com.dieat.dto.Exercise"
+		useGeneratedKeys="true"
+		keyProperty="boardNo" keyColumn="boardno">
+		INSERT INTO WEIGHT
+		(W_NO, W_NAME, W_CAL, W_CONTENT, W_TYPE)
+		VALUES
+		(
+			board_sequence.nextval,
+			#{W_NAME}, #{M_CAL}, #{W_CONTENT}, #{W_TYPE}
+		)
+		</insert>		
+
+</mapper>
+
+
+
+
+
+
+
+

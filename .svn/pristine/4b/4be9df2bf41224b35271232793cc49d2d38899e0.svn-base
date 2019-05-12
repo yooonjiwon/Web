@@ -1,0 +1,10 @@
+package com.dieat.mapper;
+
+import java.util.HashMap;
+
+import com.dieat.dto.Member;
+
+public interface GymMapper {
+	
+	
+}

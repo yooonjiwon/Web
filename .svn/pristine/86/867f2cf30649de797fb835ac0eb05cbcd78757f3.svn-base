@@ -1,0 +1,13 @@
+package com.dieat.mapper;
+
+import java.util.HashMap;
+
+import com.dieat.dto.FoodInfo;
+import com.dieat.dto.GymDto;
+import com.dieat.dto.Member;
+
+public interface GymMapper {
+		
+	void insertGym(GymDto gymDto);
+		
+}

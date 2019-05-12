@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.dieat.mapper.FoodInfoMapper">
+<!-- 
+	<select id="selectMemberByIdAndPasswd" parameterType="hashmap" resultType="com.demoweb.dto.Member">
+		SELECT memberid, email, usertype 
+		FROM member 
+		WHERE memberid = #{id} AND passwd = #{passwd}
+	</select>
+ -->	
+	<insert id="registFoodInfo" parameterType="com.dieat.dto.FoodInfo">
+		INSERT INTO FOODINFO (F_NO, F_NAME, F_KCAL, F_CARBO, F_PROTEIN, F_FAT, F_SUGARS, F_NATRIUM)
+		VALUES (F_NO_SEQ.nextval, #{foodName}, #{kcal}, #{carbo},#{protein},#{fat},#{sugars},#{natrium})
+	</insert>
+
+</mapper>
+
+
+
+
+
+
+
+

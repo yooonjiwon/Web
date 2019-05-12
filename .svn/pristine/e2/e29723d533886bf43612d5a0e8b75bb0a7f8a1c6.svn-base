@@ -1,0 +1,84 @@
+<%@ page language="java" 
+		 contentType="text/html; charset=utf-8"
+    	 pageEncoding="utf-8" %>
+ 
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>글쓰기</title>
+	<link rel="Stylesheet" href="/dieat/resources/styles/calendar.css" />	
+	<style type="text/css">
+	a { text-decoration: none }
+	</style>
+	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+	<script type="text/javascript">
+	$(function() { //jQuery's main function
+		$('a#write').on('click', function(event) {
+			$('form#writeform').submit();
+			event.preventDefault();// <a>의 기본 기능 수행 막는 명령
+		});
+	});
+	</script>	
+</head>
+<body>
+
+	<div id="pageContainer">
+	
+	   <jsp:include page="/WEB-INF/views/include/header.jsp" flush="true">
+       <jsp:param name="bg-color" value="palegreen" />
+       </jsp:include>
+	   <jsp:include page="/WEB-INF/views/include/footer.jsp" flush="true">
+       <jsp:param name="bg-color" value="palegreen" />
+       </jsp:include>		
+		
+		<div style="padding-top:25px;text-align:center">
+		<div id="inputcontent">
+		    <div id="inputmain">
+		        <div class="inputsubtitle">운동종류등록</div>
+		        <form id="writeform" action="write7.action" 
+		        	  method="post"
+		        	  enctype="multipart/form-data">
+		        <table>
+		            <tr>
+		                <th>운동명</th>
+		                <td>
+		                    <input type="text" name="title" style="width:280px" />
+		                </td>
+		            </tr>
+		            <tr>
+		                <th>운동부위</th>
+		                <td>
+		                    <input type="text" name="type" style="width:280px" />
+		                </td>
+		            </tr>
+		            <tr>
+		                <th>칼로리</th>
+		                <td>
+		                    <input type="text" name="cal" style="width:280px" />
+		                </td>
+		            </tr>		            
+		            <tr>
+		                <th>운동방법</th>
+		                <td>		                    
+		                    <textarea 
+		                    	name="content" cols="76" rows="15"></textarea>
+		                </td>
+		            </tr>
+		        </table>
+		        <div class="buttons">
+		        	<!-- <form>의 submit 수행 -->	        	
+		        	<a id="write" href="#">글등록</a>
+		        	&nbsp;&nbsp;
+		        	<a href="/dieat/calorie/list7.action">목록보기</a>
+		        </div>
+		        </form>
+		    </div>
+		</div>   	
+	
+	</div>
+	</div>
+
+</body>
+</html>

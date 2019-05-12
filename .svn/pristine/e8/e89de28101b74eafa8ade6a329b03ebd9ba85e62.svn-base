@@ -1,0 +1,26 @@
+package com.dieat.dao;
+
+import java.util.HashMap;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
+
+import com.dieat.dto.Member;
+import com.dieat.mapper.GymMapper;
+import com.dieat.mapper.MemberMapper;
+
+//@Repository
+public class GymDao {
+
+	@Autowired
+	@Qualifier("gymMapper")
+	private GymMapper gymMapper;
+
+	public static void registFoodInfo(int boardNo) {
+		
+		
+	}
+	
+
+}

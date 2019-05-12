@@ -1,0 +1,23 @@
+package com.dieat.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import com.dieat.dao.GymDao;
+import com.dieat.dao.MemberDao;
+import com.dieat.dto.Member;
+
+//@Service //@Component
+public class GymService {
+
+	@Autowired
+	@Qualifier("gymDao")
+	private GymDao gymDao;
+
+	public static GymService findGymByGymNo(int boardNo) {
+		GymDao.registFoodInfo(boardNo);
+		return null;
+	}
+	
+}

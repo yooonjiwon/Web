@@ -1,0 +1,88 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+		<title>writeform</title>
+		<meta charset="utf-8">
+		<meta name="format-detection" content="telephone=no" />
+
+		<jsp:include page="/WEB-INF/views/include/css-script.jsp" />
+		<link rel="stylesheet" href="/dieat/resources/styles/buttons.css">
+
+		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+		<script type="text/javascript">
+			$(function() { //jQuery's main function
+				$('a#write').on('click', function(event) {
+					$('form#writeform').submit();
+					event.preventDefault();// <a>의 기본 기능 수행 막는 명령
+				});
+			});
+		</script>
+</head>
+
+<body>
+
+			<jsp:include page="/WEB-INF/views/include/header.jsp" />
+
+			<div class="content"><div class="ic">More Website Templates @ TemplateMonster.com - April 21, 2014!</div>
+				<div class="container_12">
+					<div class="grid_2">
+						<h3>Body Part</h3>
+						<ul class="list1 color1">
+							<li><a href="#">등</a></li> <hr class="style1">
+                            <li><a href="#">가슴</a></li> <hr class="style1">
+							<li><a href="#">어깨</a></li> <hr class="style1">
+							<li><a href="#">이두</a></li> <hr class="style1">
+							<li><a href="#">삼두</a></li> <hr class="style1">
+							<li><a href="#">허리</a></li> <hr class="style1">
+                            <li><a href="#">복근</a></li> <hr class="style1">
+							<li><a href="#">허벅지</a></li> <hr class="style1">
+							<li><a href="#">종아리</a></li> <hr class="style1">
+						</ul>
+						
+					</div>
+					<div class="grid_8">
+                        <br>
+                        <button class="button" style="vertical-align:middle; float:right"><span>부위별</span></button>
+                        <button class="button" style="vertical-align:middle; float:right"><span>체형별</span></button>
+                        <button class="button" style="vertical-align:middle; float:right"><span>분할법</span></button>
+                        
+                      <input type="text" name="search" placeholder="Search..">
+<br>
+<br>
+				<table>
+					<tr>
+						<th>제목</th>
+						<td><input type="text" name="title" style="width: 280px" />
+						</td>
+					</tr>
+
+					<tr>
+						<th>첨부파일</th>
+						<td><input type="file" name="attach"></td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td><textarea name="content" cols="76" rows="15"></textarea>
+						</td>
+					</tr>
+				</table>
+				
+				<div class="buttons">
+		        	<!-- <form>의 submit 수행 -->	        	
+		        	<a id="write" href="#">글쓰기</a>
+		        	&nbsp;&nbsp;
+		        	<a href="/dieat/workout/workoutlist.action">목록보기</a>
+		        </div>
+		        
+					 <br><br>
+                      <button class="button" style="vertical-align:middle; float:right; background-color: rgb(116,105,87); font-color:white"><span>글쓰기</span></button>  
+				</div>
+			</div>
+		</div>
+		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp" flush="true">
+		<jsp:param name="bg-color" value="palegreen" />
+        </jsp:include>
+	</body>
+</html>

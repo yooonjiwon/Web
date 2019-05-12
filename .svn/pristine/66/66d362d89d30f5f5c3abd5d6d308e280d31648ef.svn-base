@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.dieat.mapper.BoardMapper">
+
+	 <select id="selectBoardList"
+		resultType="com.dieat.dto.Board"
+		parameterType="hashmap">
+		SELECT *
+		FROM
+		(
+			SELECT
+				rownum idx, s.*
+			FROM
+			(
+				SELECT
+					CBOARD_NO, M_ID, TITLE,
+					REGDATE, READCOUNT,
+					DELETED, CATEGORY, RECOMMEND
+				FROM
+					COMMUNITY_BOARD
+				WHERE
+					DELETED = '0' 		
+			) s
+		)
+		WHERE idx >= #{first} AND idx <![CDATA[<]]> #{last}	
+	</select>
+	
+	<select id="selectBoardCount" resultType="int">
+		SELECT count(*) FROM COMMUNITY_BOARD
+	</select>
+	 
+	<insert id="insertBoard" parameterType="com.dieat.dto.Board"
+		useGeneratedKeys="true"
+		keyProperty="boardNo" keyColumn="boardno">
+		INSERT INTO COMMNUITY_BOARD
+		(CBOARD_NO, TITLE, M_ID, CONTENT)
+		VALUES
+		(
+			board_sequence.nextval,
+			#{TITLE}, #{M_ID}, #{CONTENT},
+			board_sequence.currval,1
+		)
+		</insert>
+		
+	<insert	id="insertBoard2" parameterType="com.dieat.dto.Board">
+		<selectKey keyProperty="boardNo" order="AFTER">
+			SELECT board_sequence.currval FROM DUAL
+		</selectKey>
+		INSERT INTO COMMNUITY_BOARD
+		(CBOARD_NO, TITLE, M_ID, CONTENT)
+		VALUES
+		(
+			board_sequence.nextval,
+			#{TITLE}, #{M_ID}, #{CONTENT},
+			board_sequence.currval, 1
+		)
+	</insert>
+		 
+	<insert id="insertBoardAttach"
+		parameterType="com.dieat.dto.BoardAttach">
+		INSERT INTO COMMUNITY_ATTACHEDIMAGE
+		(CATTACHNO, CBOARD_NO, SAVEDFILENAME, USERFILENAME)
+		VALUES
+		(
+			boardattach_sequence.nextval,
+			#{CATTACHNO}, #{SAVEDFILENAME}, #{USERFILENAME}
+		)
+		</insert>
+		
+	<select id="selectBoardList2" resultType="com.dieat.dto.Board">
+		SELECT CBOARD_NO, M_ID, TITLE, REGDATE, READCOUNT, DELETED, CATEGORY, RECOMMEND
+		FROM COMMUNITY_BOARD
+	</select>
+</mapper>
+
+
+
+
+
+
+
+

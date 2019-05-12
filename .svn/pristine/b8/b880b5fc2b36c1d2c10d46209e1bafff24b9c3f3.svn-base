@@ -1,0 +1,26 @@
+package com.dieat.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import com.dieat.dao.MemberDao;
+import com.dieat.dto.Member;
+
+//@Service //@Component
+public class MemberService {
+
+//	@Autowired
+//	@Qualifier("memberDao")
+//	private MemberDao memberDao;
+//	
+//	public void registerMember(Member member) {
+//		memberDao.insertMember(member);
+//	}
+//	public Member authenticate(String memberId, String passwd) {
+//		Member member = 
+//				memberDao.selectMemberByIdAndPasswd(memberId, passwd);
+//		return member;
+//	}
+
+}

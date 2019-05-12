@@ -1,0 +1,63 @@
+package com.dieat.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import com.dieat.dao.CalorieDao;
+import com.dieat.dto.Calorie;
+
+@Service(value = "calorieService")
+public class CalorieService {
+	
+	@Autowired
+	@Qualifier("calorieDao")
+	private CalorieDao calorieDao;
+	
+	public List<Calorie> findBoardList() {
+		List<Calorie> boards = calorieDao.selectBoard();
+		return boards;
+	}
+
+	public void findBoardByBoardNo(int boardNo) {
+		
+		Calorie calorie = calorieDao.selectBoardByBoardNo2(boardNo);
+	}
+	public void updateBoard(Calorie calorie) {
+		calorieDao.updateBoard(calorie);
+	}
+
+	public void deleteBoard(int boardNo) {
+		calorieDao.deleteBoard(boardNo);		
+	}
+
+	public void increaseReadCount(int boardNo) {
+		calorieDao.updateReadCount(boardNo);		
+	}
+
+	public void replyBoard(Calorie calorie) {
+		//�썝 湲��쓽 �젙蹂� 議고쉶
+		Calorie parent = calorieDao.selectBoardByBoardNo(calorie.getNo());
+		
+		//媛숈� 洹몃９�뿉 �룷�븿�맂 湲곗〈 湲��쓽 �닚�꽌踰덊샇(step) 利앷�
+		calorieDao.updateStep(parent.getGroupNo(), parent.getStep());
+		
+		calorie.setGroupNo(parent.getGroupNo());
+		calorie.setStep(parent.getStep() + 1);
+		calorie.setDepth(parent.getDepth() + 1);
+		calorieDao.insertReply(calorie);		
+	}
+
+	public List<Calorie> findBoardList(int first, int last) {
+		List<Calorie> boards = calorieDao.selectBoardList2(first, last);
+		return boards;
+	}
+
+	public int getBoardCount() {
+		int count = calorieDao.getBoardCount();
+		return count;
+	}	
+}

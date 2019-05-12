@@ -1,0 +1,34 @@
+package com.dieat.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.env.SystemEnvironmentPropertySource;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import com.dieat.dto.FoodInfo;
+import com.dieat.service.FoodInfoService;
+
+@Controller
+@RequestMapping(value = "/foodinfo")
+public class FoodInfoController {
+	
+	@Autowired
+	@Qualifier("foodInfoService")
+	private FoodInfoService foodInfoService;
+	
+	@RequestMapping(value = "/register.action", method = RequestMethod.GET)
+	public String registerForm(){
+		
+		return "foodinfo/register";}	
+	
+	@RequestMapping(value = "/register.action", method = RequestMethod.POST)
+	public String register(FoodInfo foodInfo){		
+		foodInfo.setFoodName(foodInfo.getFoodName());
+		System.out.println(foodInfo.getFoodName());
+		foodInfoService.registFoodInfo(foodInfo);
+		return "foodinfo/register";}	
+
+}

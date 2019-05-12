@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.dieat.mapper.GymMapper">
+
+	<!--
+	<insert id="insertGym" parameterType="com.dieat.dto.GymDto">
+	
+	INSERT INTO gym
+		(GI_No, GI_name, GI_Locker, GI_Sporting, GI_PT, GI_price, GI_comment, M_ID, M_DATE, GI_status)
+		VALUES 
+		(
+			gym_sequence.nextval, #{gi_name}, #{gi_locker}, #{gi_sporting}, #{gi_pt}, #{gi_price}, #{gi_comment}, #{M_id}, #{gi_date}, gym_sequence.currval, 1 
+			
+		)
+	</insert>
+	 -->
+	
+	<select id="selectGymList" resultType="com.dieat.dto.GymDto" parameterType="hashmap">
+				SELECT
+					GI_No gymNo, GI_name "name", GI_Locker locker, GI_Sporting sporting,
+					GI_PT pt, GI_price price, GI_comment "comment", M_ID memberId,
+					GI_DATE regDate, GI_status status, GI_Picture picture
+				FROM
+					GYM
+				WHERE
+						GI_status = 0
+				ORDER BY GI_No DESC
+	</select>
+	
+
+</mapper>
+
+
+
+
+
+
+
+

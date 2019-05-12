@@ -1,0 +1,115 @@
+package com.dieat.dto;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+public class GymDto {
+
+	private int gymNo;
+	private String name;
+	private String writer;
+	private String locker;
+	private String sporting;
+	private String pt;
+	private int price;
+	private int stauts;
+	private String picture;
+	private String comment;
+	private Date regDate;
+	
+	private int groupNo;
+	private int step;
+	private int depth;
+
+	//Board와 BoardAttach 테이블의 1:Many 관계를 구현하는 변수
+	//ArrayList<BoardAttach> attachments;
+	//Board와 BoardComment 테이블의 1:Many 관계를 구현하는 변수
+	//ArrayList<BoardComment> comments;
+	
+	public int getGymNo() {
+		return gymNo;
+	}
+	public void setGymNo(int gymNo) {
+		this.gymNo = gymNo;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getWriter() {
+		return writer;
+	}
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
+	public String getLocker() {
+		return locker;
+	}
+	public void setLocker(String locker) {
+		this.locker = locker;
+	}
+	public String getSporting() {
+		return sporting;
+	}
+	public void setSporting(String sporting) {
+		this.sporting = sporting;
+	}
+	public String getPt() {
+		return pt;
+	}
+	public void setPt(String pt) {
+		this.pt = pt;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public int getStauts() {
+		return stauts;
+	}
+	public void setStauts(int stauts) {
+		this.stauts = stauts;
+	}
+	public String getPicture() {
+		return picture;
+	}
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	public int getGroupNo() {
+		return groupNo;
+	}
+	public void setGroupNo(int groupNo) {
+		this.groupNo = groupNo;
+	}
+	public int getStep() {
+		return step;
+	}
+	public void setStep(int step) {
+		this.step = step;
+	}
+	public int getDepth() {
+		return depth;
+	}
+	public void setDepth(int depth) {
+		this.depth = depth;
+	}
+	public Date getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(Date regDate) {
+		this.regDate = regDate;
+	}
+	
+	
+}

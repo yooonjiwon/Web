@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.dieat.mapper.WorkoutMapper">
+
+<!-- 	
+	<select id="findWorkoutList" resultType="com.dieat.dto.Workout">
+		SELECT *
+		FROM		
+		(
+			SELECT
+				rownum idx, s.* 
+			FROM		
+			(
+				SELECT
+					W_BOARDNO, W_TITLE,
+					W_REGDATE, W_READCOUNT,
+					W_DELETED, W_STEP, W_DEPTH
+				FROM
+					WORKOUT
+				WHERE
+						W_DELETED = '0'
+				ORDER BY W_BOARDNO DESC, W_STEP ASC
+			) s		
+		)
+		WHERE idx > #{first} AND idx <![CDATA[<]]> #{last}	
+	</select> -->
+	
+	
+
+</mapper>
+
+
+
+
+
+
+
+

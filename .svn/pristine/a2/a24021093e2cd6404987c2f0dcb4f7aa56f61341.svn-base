@@ -1,0 +1,44 @@
+package com.dieat.mapper;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.dieat.dto.FoodInfo;
+/**
+ * 식품 정보 입력을 위한 DAO mapper<br>
+ * @author HSL
+ *
+ */
+public interface FoodInfoMapper {	            
+//	List<Board> selectBoardList(HashMap<String, Object> params);
+//	int selectBoardCount();
+	
+	void registFoodInfo(FoodInfo foodInfo);
+//	void insertBoard2(Board board);
+//	void insertBoardAttach(BoardAttach attach);
+//	
+//	Board selectBoardByBoardNo2(int boardNo);
+//	Board selectBoardByBoardNo3(int boardNo);
+//	List<BoardAttach> selectBoardAttachByBoardNo(int boardNo);
+//	
+//	///////////////////////////////////////////////
+//	
+//	List<Board> selectBoardList2();
+//	Board selectBoardByBoardNo(int boardNo);
+//	void updateBoard(Board board);
+//	void deleteBoard(int boardNo);
+//	void updateReadCount(int boardNo);
+//	void insertReply(Board board);
+//	void updateStep(HashMap<String, Object> params);
+//	BoardAttach selectBoardAttachByAttachNo(int attachNo);
+//	void insertComment(BoardComment comment);
+//	void updateComment(BoardComment comment);
+//	void deleteComment(int commentNo);
+//	List<BoardComment> selectCommentByBoardNo(int boardNo);
+
+	List<FoodInfo> selectFoodList(HashMap<String, Object> params);
+	int selectFoodCount();
+
+	List<FoodInfo> selectFoodNameList();
+	
+}

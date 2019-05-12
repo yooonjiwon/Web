@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.dieat.mapper.FoodInfoMapper">
+<!-- 
+	<select id="selectMemberByIdAndPasswd" parameterType="hashmap" resultType="com.dieat.dto.Member">
+		SELECT memberid, email, usertype 
+		FROM member 
+		WHERE memberid = #{id} AND passwd = #{passwd}
+	</select>
+ -->	
+	<insert id="registFoodInfo" parameterType="com.dieat.dto.FoodInfo">
+		INSERT INTO FOODINFO (F_NO, F_NAME, F_KCAL, F_CARBO, F_PROTEIN, F_FAT, F_SUGARS, F_NATRIUM)
+		VALUES (F_NO_SEQ.nextval, #{foodName}, #{kcal}, #{carbo},#{protein},#{fat},#{sugars},#{natrium})
+	</insert>
+
+	<select id="selectFoodList" resultType="com.dieat.dto.FoodInfo" parameterType="hashmap">
+		SELECT *
+		FROM		
+		(
+			SELECT
+				rownum idx, s.* 
+			FROM		
+			(
+				SELECT
+					F_NO as foodNo, F_NAME as foodName, F_KCAL as kcal, 
+					F_CARBO as carbo, F_PROTEIN as protein, F_FAT as fat, 
+					F_SUGARS as sugars, F_NATRIUM as natrium
+				FROM
+					FOODINFO
+			) s		
+		)
+		WHERE idx >= #{first} AND idx <![CDATA[<]]> #{last}	
+	</select>
+
+	<select id="selectFoodCount" resultType="int">
+		SELECT count(*) FROM FOODINFO
+	</select>
+
+	<select id="selectFoodNameList" resultType="com.dieat.dto.FoodInfo" parameterType="hashmap">
+		SELECT F_NAME as foodName FROM FOODINFO;
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+

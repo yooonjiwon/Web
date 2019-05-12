@@ -1,0 +1,8 @@
+package com.dieat.service;
+
+import org.springframework.stereotype.Service;
+
+@Service(value = "foodInfoService")
+public class FoodInfoService {
+
+}

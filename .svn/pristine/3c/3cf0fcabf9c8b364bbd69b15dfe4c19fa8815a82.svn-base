@@ -1,0 +1,26 @@
+package com.dieat.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+@RequestMapping(value = "/exercise")
+public class ExerciseController {
+	
+	@RequestMapping(value = "/weight-list.action", method = RequestMethod.GET)
+	public String list() {
+		return "exercise/list";
+	}
+	
+	@RequestMapping(value = "/weight-write.action", method = RequestMethod.GET)
+	public String writeFrom() {
+		return "exercise/write";
+	}
+	
+	@RequestMapping(value = "/weight-write.action", method = RequestMethod.POST)
+	public String write() {
+		return "exercise/write";
+	}
+	
+}

@@ -1,0 +1,86 @@
+package com.dieat.dao;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+import com.dieat.dto.Calorie;
+import com.dieat.mapper.CalorieMapper;
+
+@Repository(value = "calorieDao")
+public class CalorieDao {
+	
+	@Autowired
+	@Qualifier("calorieMapper")
+	private CalorieMapper calorieMapper;
+
+	public int insertBoard(Calorie board) {
+		//board.getBoardNo() ==> 0 //지정되지 않은 상태
+		calorieMapper.insertBoard(board);
+		return board.getNo(); //board.getBoardNo() ==> 등록된 글번호
+	}
+
+	public List<Calorie> selectBoard() {
+		List<Calorie> boards = calorieMapper.selectBoardList2();		
+		return boards;
+	}
+
+	public Calorie selectBoardByBoardNo(int boardNo) {
+		Calorie board = calorieMapper.selectBoardByBoardNo(boardNo);
+		return board;//조회 성공하면 Calorie 아니면 null
+	}
+	
+	public Calorie selectBoardByBoardNo2(int boardNo) {
+		
+		//Calorie board = boardMapper.selectBoardByBoardNo2(boardNo);
+		Calorie board = calorieMapper.selectBoardByBoardNo3(boardNo);
+		
+		return board;
+	}
+
+	public void updateBoard(Calorie board) {
+		calorieMapper.updateBoard(board);
+	}
+
+	public void deleteBoard(int boardNo) {
+		calorieMapper.deleteBoard(boardNo);
+	}
+
+	public void updateReadCount(int boardNo) {
+		calorieMapper.updateReadCount(boardNo);
+	}
+
+	public void insertReply(Calorie board) {
+		calorieMapper.insertReply(board);
+		
+	}
+
+	public void updateStep(int groupNo, int step) {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("groupno", groupNo);
+		params.put("step", step);
+		
+		calorieMapper.updateStep(params);
+	}
+	
+	public List<Calorie> selectBoardList2(int first, int last) {
+		
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("first", first);
+		params.put("last", last);
+		
+		List<Calorie> boards = calorieMapper.selectBoardList(params);
+		
+		return boards;
+	}
+	
+	public int getBoardCount() {
+		int count = calorieMapper.selectBoardCount();
+		return count;
+	}
+}
