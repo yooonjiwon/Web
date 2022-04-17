@@ -1,6 +1,4 @@
-# Web
-[JAVA] web programming project
----
+# [JAVA] web programming project
 
 ## Name of Project
 Hello Seoul (2017.07)
