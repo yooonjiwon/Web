@@ -2,13 +2,13 @@
 [JAVA] web programming project
 ---
 
-## 프로젝트명
+## Name of Project
 Hello Seoul (2017.07)
 
-## 목적
-서울시 방문 관광객 증가
+## Objective
+Make web page for tourists visiting Seoul, Korea
 
-## 개발 환경
+## Environment
 - OS : Windows 7 Professional K 64bit (Server, Client)
 - WAS : Tomcat 8.5.x
 - JDK : JDK 1.8.x (64bit)
@@ -18,7 +18,7 @@ Hello Seoul (2017.07)
 - DB Client : SQL Developer 4.1.x
 - Source Control Client : Subclipse Eclipse Plugin 4.2.x
 
-## 적용기술
+## Application
 - Java 8.x
 - Servlet 3.1
 - JSP 2.2
